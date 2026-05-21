@@ -1,0 +1,14 @@
+{
+  "name": "ghines-vsl-funnel",
+  "version": "1.0.0",
+  "private": true,
+  "type": "module",
+  "scripts": {
+    "dev": "netlify dev",
+    "serve": "node aria_chat_server.mjs",
+    "check": "node --check aria_chat_server.mjs && node --check netlify/functions/api.mjs && node scripts/check-inline-scripts.mjs"
+  },
+  "devDependencies": {
+    "netlify-cli": "^17.38.1"
+  }
+}

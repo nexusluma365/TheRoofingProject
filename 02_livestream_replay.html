@@ -1,0 +1,1693 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Previously Streamed — Start Your Roofing Business</title>
+<link href="https://fonts.googleapis.com/css2?family=Bricolage+Grotesque:wght@400;500;600;700;800&family=Figtree:ital,wght@0,300;0,400;0,500;0,600;1,300&display=swap" rel="stylesheet">
+<style>
+:root {
+  --bg:        #111418;
+  --bg2:       rgba(31,36,43,0.86);
+  --bg3:       rgba(45,51,60,0.74);
+  --glass:     rgba(42,48,57,0.66);
+  --glass2:    rgba(57,65,76,0.72);
+  --border:    rgba(222,234,246,0.09);
+  --borderS:   rgba(222,234,246,0.05);
+  --t1:        #f5f5f7;
+  --t2:        #aeaeb2;
+  --t3:        #6e6e73;
+  --accent:    #0a84ff;
+  --accentL:   #64d2ff;
+  --aGlow:     rgba(10,132,255,0.24);
+  --live:      #0a84ff;
+  --gold:      #e8f2ff;
+  --blur:      blur(24px) saturate(160%);
+  --blurS:     blur(12px) saturate(140%);
+  --r8:8px; --r12:12px; --r16:16px; --r20:20px; --r24:24px;
+  --fd: 'Bricolage Grotesque', sans-serif;
+  --fb: 'Figtree', sans-serif;
+}
+*,*::before,*::after{margin:0;padding:0;box-sizing:border-box}
+html,body{height:100dvh;overflow:hidden}
+body{
+  font-family:var(--fb);
+  background:var(--bg);
+  color:var(--t1);
+  -webkit-font-smoothing:antialiased;
+  background-image:url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='300' height='300'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.75' numOctaves='4' stitchTiles='stitch'/%3E%3CfeColorMatrix type='saturate' values='0'/%3E%3C/filter%3E%3Crect width='300' height='300' filter='url(%23n)' opacity='0.03'/%3E%3C/svg%3E");
+}
+::-webkit-scrollbar{width:3px}
+::-webkit-scrollbar-track{background:transparent}
+::-webkit-scrollbar-thumb{background:rgba(255,255,255,0.09);border-radius:4px}
+
+/* ── APP SHELL ── */
+#app{display:flex;flex-direction:column;height:100dvh}
+
+/* ── TOP BAR ── */
+#top{
+  height:52px;flex-shrink:0;
+  display:flex;align-items:center;gap:12px;padding:0 16px;
+  background:rgba(17,20,24,0.94);
+  backdrop-filter:var(--blur);-webkit-backdrop-filter:var(--blur);
+  border-bottom:1px solid var(--border);
+  z-index:50;
+}
+.livebadge{
+  display:flex;align-items:center;gap:5px;
+  background:var(--live);color:#fff;
+  font-family:var(--fd);font-size:10px;font-weight:600;letter-spacing:1.2px;
+  padding:4px 10px 4px 8px;border-radius:6px;flex-shrink:0;
+  animation:livePulse 2.4s ease-in-out infinite;
+}
+.ldot{width:6px;height:6px;background:#fff;border-radius:50%;animation:blink 1.4s ease-in-out infinite}
+@keyframes blink{0%,100%{opacity:1}50%{opacity:.25}}
+@keyframes livePulse{0%,100%{box-shadow:0 0 0 0 rgba(10,132,255,.42)}50%{box-shadow:0 0 0 6px rgba(10,132,255,0)}}
+
+.ttl{flex:1;min-width:0}
+.ttl h1{font-family:var(--fd);font-size:13px;font-weight:600;white-space:nowrap;overflow:hidden;text-overflow:ellipsis;letter-spacing:-.2px}
+.ttl p{font-size:11px;color:var(--t3);margin-top:1px}
+
+.vpill{
+  display:flex;align-items:center;gap:5px;
+  background:var(--glass);backdrop-filter:var(--blurS);
+  border:1px solid var(--border);border-radius:20px;
+  padding:4px 12px;flex-shrink:0;
+}
+.vpill svg{color:var(--accent)}
+.vpill span{font-size:11.5px;font-weight:500;color:var(--t2)}
+#vc{color:var(--t1);font-weight:600;transition:color .35s}
+
+.ltoggle{
+  display:none;background:var(--glass);backdrop-filter:var(--blurS);
+  border:1px solid var(--border);border-radius:10px;padding:3px;gap:2px;flex-shrink:0;
+}
+.lb{
+  display:flex;align-items:center;gap:5px;
+  background:none;border:none;cursor:pointer;
+  padding:5px 10px;border-radius:7px;
+  font-family:var(--fb);font-size:11px;font-weight:500;
+  color:var(--t3);transition:all .2s;
+}
+.lb.active{background:rgba(255,255,255,.10);color:var(--t1);box-shadow:inset 0 1px 0 rgba(255,255,255,.07),0 1px 4px rgba(0,0,0,.3)}
+.lb:hover:not(.active){color:var(--t2)}
+
+/* ── MAIN ── */
+#main{
+  flex:1;
+  display:grid;
+  grid-template-columns:minmax(260px,.9fr) clamp(300px,calc((100dvh - 52px)*10.5/16),500px) minmax(280px,1fr);
+  overflow:hidden;
+}
+#vp{
+  order:2;
+  display:flex;
+  align-items:stretch;
+  background:#000;
+  position:relative;
+  overflow:hidden;
+  border-left:1px solid var(--border);
+  border-right:1px solid var(--border);
+  cursor:pointer;
+}
+
+/* ── VIDEO PANEL ── */
+.vpbg{position:absolute;inset:0;z-index:0;overflow:hidden}
+.vpbg video{width:100%;height:100%;display:block;object-fit:cover;background:#000}
+.vvig{
+  position:absolute;inset:0;z-index:1;pointer-events:none;
+  background:radial-gradient(ellipse 80% 60% at 50% 0%,transparent 0%,rgba(0,0,0,.4) 100%),
+             linear-gradient(to bottom,rgba(0,0,0,.15) 0%,transparent 28%,transparent 58%,rgba(0,0,0,.6) 100%);
+}
+.vptop{position:absolute;top:0;left:0;right:0;padding:14px 16px;z-index:4;pointer-events:none}
+.iplabel{font-size:9px;letter-spacing:2.2px;text-transform:uppercase;color:rgba(255,255,255,.42);margin-bottom:2px;font-weight:500}
+#timer{
+  font-family:var(--fd);font-size:clamp(22px,4vw,42px);font-weight:700;
+  color:#fff;letter-spacing:-1.5px;line-height:1;
+  text-shadow:0 2px 16px rgba(0,0,0,.7);
+}
+.vstrip{
+  position:absolute;bottom:13px;left:11px;right:11px;z-index:4;
+  display:flex;align-items:center;pointer-events:none;
+}
+.va{
+  width:28px;height:28px;border-radius:50%;
+  border:2px solid rgba(18,18,20,.85);
+  font-size:11px;font-weight:700;color:#fff;
+  display:flex;align-items:center;justify-content:center;
+  margin-left:-5px;flex-shrink:0;
+  animation:avIn .35s cubic-bezier(.175,.885,.32,1.275);
+}
+.va:first-child{margin-left:0}
+@keyframes avIn{from{transform:scale(0) rotate(-10deg);opacity:0}to{transform:scale(1) rotate(0);opacity:1}}
+#hearts{position:absolute;bottom:90px;right:13px;z-index:5;pointer-events:none;display:flex;flex-direction:column;gap:2px;align-items:center}
+.hf{font-size:20px;animation:hflt 2.8s ease-out forwards;opacity:0}
+@keyframes hflt{0%{opacity:1;transform:translateY(0) scale(1) rotate(-5deg)}40%{opacity:.9;transform:translateY(-40px) scale(1.15) rotate(5deg)}100%{opacity:0;transform:translateY(-110px) scale(.4) rotate(-8deg)}}
+
+/* ── PUBLIC CHAT ── */
+#sb{
+  order:1;
+  background:rgba(18,18,20,.92);
+  backdrop-filter:var(--blur);
+  -webkit-backdrop-filter:var(--blur);
+  display:flex;
+  flex-direction:column;
+  overflow:hidden;
+  min-width:0;
+}
+.hstrip{padding:13px 14px 11px;border-bottom:1px solid var(--borderS);flex-shrink:0}
+.hrow{display:flex;align-items:center;gap:10px;margin-bottom:10px}
+.hav{
+  width:36px;height:36px;border-radius:50%;flex-shrink:0;
+  background:linear-gradient(135deg,#0a84ff,#64d2ff);
+  display:flex;align-items:center;justify-content:center;
+  font-family:var(--fd);font-size:14px;font-weight:700;
+  box-shadow:0 0 0 2.5px rgba(10,132,255,.26);
+}
+.hname{font-family:var(--fd);font-size:13px;font-weight:600;letter-spacing:-.2px}
+.hsub{font-size:10.5px;color:var(--t3);margin-top:1px}
+.supbtn{
+  width:100%;display:flex;align-items:center;justify-content:center;gap:6px;
+  background:var(--glass);backdrop-filter:var(--blurS);
+  border:1px solid rgba(100,210,255,.24);border-radius:10px;
+  padding:8px 14px;color:var(--accentL);
+  font-family:var(--fb);font-size:12px;font-weight:600;cursor:pointer;
+  transition:all .22s;letter-spacing:.1px;
+}
+.supbtn:hover{background:rgba(10,132,255,.1);border-color:rgba(100,210,255,.42);transform:translateY(-1px);box-shadow:0 4px 16px rgba(10,132,255,.18)}
+.supbtn:active{transform:translateY(0)}
+
+/* ── FEED ── */
+#feed{flex:1;overflow-y:auto;padding:8px 11px 6px;display:flex;flex-direction:column;gap:1px;scroll-behavior:smooth}
+.msg{display:flex;gap:8px;align-items:flex-start;padding:5px 6px;border-radius:10px;animation:mIn .28s cubic-bezier(.4,0,.2,1);transition:background .18s}
+.msg:hover{background:rgba(255,255,255,.03)}
+@keyframes mIn{from{opacity:0;transform:translateY(5px)}to{opacity:1;transform:translateY(0)}}
+.mav{width:26px;height:26px;border-radius:50%;flex-shrink:0;display:flex;align-items:center;justify-content:center;font-size:10.5px;font-weight:700;color:#fff;margin-top:1px}
+.mbody{flex:1;min-width:0}
+.mhead{display:flex;align-items:baseline;gap:5px;margin-bottom:1.5px;line-height:1}
+.mname{font-size:11.5px;font-weight:600;color:var(--t1)}
+.mloc{font-size:9.5px;color:var(--t3)}
+.mtime{font-size:9.5px;color:var(--t3);margin-left:auto}
+.mtxt{font-size:12.5px;color:rgba(245,245,247,.76);line-height:1.45;word-break:break-word}
+.mtxt.me{color:var(--t1);font-weight:500}
+.nrow{padding:3px 6px;animation:mIn .28s ease}
+.njoin{display:inline-flex;align-items:center;gap:5px;font-size:11px;color:var(--t3);background:rgba(255,255,255,.03);border-radius:20px;padding:3px 10px}
+.ndon{display:inline-flex;align-items:center;gap:5px;font-size:11px;color:var(--accentL);background:rgba(10,132,255,.08);border:1px solid rgba(100,210,255,.18);border-radius:20px;padding:3px 11px}
+
+/* ── PRIVATE CHAT / PRO PANEL ── */
+#pc{
+  order:3;
+  background:rgba(18,18,20,.94);
+  backdrop-filter:var(--blur);
+  -webkit-backdrop-filter:var(--blur);
+  display:flex;
+  flex-direction:column;
+  overflow:hidden;
+  min-width:0;
+}
+.pchead{padding:13px 14px 11px;border-bottom:1px solid var(--borderS);flex-shrink:0}
+.pctag{font-size:9px;letter-spacing:1.6px;text-transform:uppercase;color:var(--accentL);font-weight:700;margin-bottom:5px}
+.pctitle{font-family:var(--fd);font-size:14px;font-weight:700;letter-spacing:-.25px}
+.pcsub{font-size:10.5px;color:var(--t3);margin-top:2px;line-height:1.35}
+.pcfeed{flex:1;overflow-y:auto;padding:12px 12px 8px;display:flex;flex-direction:column;gap:9px}
+.pcmsg{display:flex;gap:8px;align-items:flex-start}
+.pcmsg.me{flex-direction:row-reverse}
+.pcav{width:28px;height:28px;border-radius:50%;background:linear-gradient(135deg,#0a84ff,#64d2ff);display:flex;align-items:center;justify-content:center;font-size:10px;font-weight:800;flex-shrink:0}
+.pcb{max-width:78%;background:rgba(255,255,255,.055);border:1px solid var(--borderS);border-radius:14px 14px 14px 5px;padding:8px 10px;font-size:12px;line-height:1.45;color:rgba(245,245,247,.78)}
+.pcmsg.me .pcb{border-radius:14px 14px 5px 14px;background:rgba(10,132,255,.13);border-color:rgba(100,210,255,.2);color:var(--t1)}
+.pcoffer{
+  max-width:92%;
+  position:relative;
+  overflow:hidden;
+  background:linear-gradient(145deg,rgba(10,132,255,.22),rgba(100,210,255,.07) 48%,rgba(255,255,255,.055));
+  border:1px solid rgba(100,210,255,.42);
+  border-radius:18px;
+  padding:13px;
+  box-shadow:0 14px 36px rgba(0,0,0,.32),0 0 0 1px rgba(10,132,255,.08),inset 0 1px 0 rgba(255,255,255,.08);
+}
+.pcoffer::before{
+  content:'';position:absolute;top:-42px;right:-34px;width:145px;height:110px;
+  background:radial-gradient(ellipse at top right,rgba(100,210,255,.24),transparent 67%);
+  pointer-events:none;
+}
+.pcoffer::after{
+  content:'LIMITED DROP';
+  position:absolute;top:10px;right:10px;
+  font-family:var(--fd);font-size:8px;font-weight:800;letter-spacing:1px;
+  color:var(--accentL);background:rgba(10,132,255,.18);
+  border:1px solid rgba(100,210,255,.28);border-radius:999px;padding:3px 7px;
+}
+.pcoffer strong{display:block;font-family:var(--fd);font-size:14.5px;line-height:1.14;margin:15px 70px 7px 0;color:var(--t1);letter-spacing:-.25px}
+.pcoffer p{font-size:11.8px;line-height:1.48;color:rgba(245,245,247,.82);margin-bottom:11px}
+.pcprice{
+  display:inline-flex;align-items:center;justify-content:center;
+  margin:0 0 10px;padding:5px 10px;border-radius:999px;
+  background:rgba(232,242,255,.13);border:1px solid rgba(232,242,255,.24);
+  color:#fff;font-family:var(--fd);font-size:12.5px;font-weight:800;
+  box-shadow:0 0 16px rgba(100,210,255,.12);
+}
+.pcunlock{
+  width:100%;
+  border:0;
+  border-radius:12px;
+  padding:10px 12px;
+  background:linear-gradient(135deg,#0a84ff,#005ecb);
+  color:#fff;
+  font-family:var(--fd);
+  font-size:12.8px;
+  font-weight:800;
+  cursor:pointer;
+  box-shadow:0 6px 20px rgba(10,132,255,.34),inset 0 1px 0 rgba(255,255,255,.16);
+  transition:transform .18s,box-shadow .18s;
+}
+.pcunlock:hover{transform:translateY(-1px);box-shadow:0 9px 26px rgba(10,132,255,.44),inset 0 1px 0 rgba(255,255,255,.18)}
+.pcbar{padding:9px 11px 10px;border-top:1px solid var(--borderS);flex-shrink:0}
+.pcrow{display:flex;align-items:center;gap:7px;background:var(--glass);border:1px solid var(--border);border-radius:22px;padding:6px 6px 6px 14px}
+.pcrow input{flex:1;min-width:0;background:none;border:0;outline:0;color:var(--t1);font-family:var(--fb);font-size:12.5px}
+.pcrow input::placeholder{color:var(--t3)}
+
+/* ── EMOJI PICKER ── */
+.iw{position:relative}
+#ep{
+  display:none;position:absolute;bottom:calc(100% + 8px);right:4px;
+  width:218px;
+  background:rgba(30,30,32,.97);backdrop-filter:var(--blur);
+  border:1px solid var(--border);border-radius:var(--r16);padding:10px;
+  z-index:100;flex-wrap:wrap;gap:3px;
+  box-shadow:0 16px 48px rgba(0,0,0,.55);
+}
+#ep.open{display:flex}
+.epe{width:30px;height:30px;border-radius:8px;display:flex;align-items:center;justify-content:center;font-size:16px;cursor:pointer;transition:background .14s}
+.epe:hover{background:rgba(255,255,255,.09)}
+
+/* ── INPUT ── */
+.cbar{padding:9px 11px 10px;border-top:1px solid var(--borderS);flex-shrink:0}
+.irow{
+  display:flex;align-items:center;gap:6px;
+  background:var(--glass);backdrop-filter:var(--blurS);
+  border:1px solid var(--border);border-radius:22px;
+  padding:6px 6px 6px 14px;
+  transition:border-color .2s,box-shadow .2s;
+}
+.irow:focus-within{border-color:rgba(100,210,255,.36);box-shadow:0 0 0 3px rgba(10,132,255,.09)}
+.irow input{flex:1;background:none;border:none;outline:none;color:var(--t1);font-family:var(--fb);font-size:12.5px}
+.irow input::placeholder{color:var(--t3)}
+.etrig{background:none;border:none;cursor:pointer;font-size:15px;padding:2px 5px;opacity:.55;transition:opacity .15s;border-radius:6px}
+.etrig:hover{opacity:1;background:rgba(255,255,255,.06)}
+.sbtn{
+  width:28px;height:28px;border-radius:50%;background:var(--accent);
+  border:none;cursor:pointer;display:flex;align-items:center;justify-content:center;
+  color:#fff;flex-shrink:0;transition:all .2s;
+  box-shadow:0 2px 8px rgba(10,132,255,.34);
+}
+.sbtn:hover{background:var(--accentL);transform:scale(1.06)}
+.sbtn:active{transform:scale(.95)}
+
+/* ── OFFER ── */
+#offer{margin:0 10px 10px;flex-shrink:0}
+.ocard{
+  background:rgba(22,26,31,.96);
+  backdrop-filter:var(--blur);-webkit-backdrop-filter:var(--blur);
+  border:1px solid rgba(100,210,255,.24);border-radius:var(--r16);
+  padding:16px 15px 13px;position:relative;overflow:hidden;
+  box-shadow:0 0 0 1px rgba(10,132,255,.08),inset 0 1px 0 rgba(255,255,255,.05);
+}
+.ocard::before{
+  content:'';position:absolute;top:-40px;right:-40px;
+  width:200px;height:160px;
+  background:radial-gradient(ellipse at top right,rgba(10,132,255,.22) 0%,transparent 65%);
+  pointer-events:none;
+}
+.ocard::after{
+  content:'';position:absolute;bottom:-20px;left:-20px;
+  width:150px;height:100px;
+  background:radial-gradient(ellipse at bottom left,rgba(100,210,255,.09) 0%,transparent 65%);
+  pointer-events:none;
+}
+.oey{
+  display:inline-flex;align-items:center;gap:5px;
+  font-size:9.5px;font-weight:700;letter-spacing:1.4px;text-transform:uppercase;
+  color:var(--accentL);background:rgba(10,132,255,.13);
+  border:1px solid rgba(100,210,255,.30);border-radius:6px;
+  padding:3px 9px;margin-bottom:9px;
+  box-shadow:0 0 12px rgba(10,132,255,.14);
+}
+.ottl{
+  font-family:var(--fd);font-size:15px;font-weight:800;
+  line-height:1.28;letter-spacing:-.4px;margin-bottom:5px;color:var(--t1);
+}
+.ottl em{font-style:normal;color:var(--accentL)}
+.osub{font-size:11.5px;color:var(--t2);line-height:1.55;margin-bottom:11px}
+.perks{display:flex;flex-direction:column;gap:5px;margin-bottom:13px}
+.perk{
+  display:flex;align-items:flex-start;gap:8px;
+  font-size:11.5px;color:rgba(245,245,247,.78);line-height:1.4;
+  padding:5px 8px;background:rgba(255,255,255,.03);
+  border-radius:8px;border:1px solid var(--borderS);
+}
+.pi{font-size:12px;flex-shrink:0;margin-top:.5px}
+.ubtn{
+  width:100%;border:none;cursor:pointer;
+  background:linear-gradient(135deg,#0a84ff 0%,#005ecb 100%);
+  color:#fff;font-family:var(--fd);font-size:13.5px;font-weight:800;letter-spacing:.2px;
+  padding:13px 16px;border-radius:var(--r12);
+  transition:all .22s;position:relative;overflow:hidden;
+  box-shadow:0 6px 22px rgba(10,132,255,.36),inset 0 1px 0 rgba(255,255,255,.18);
+}
+.ubtn::after{content:'';position:absolute;inset:0;background:linear-gradient(90deg,transparent,rgba(255,255,255,.1),transparent);transform:translateX(-100%);transition:transform .55s}
+.ubtn:hover::after{transform:translateX(100%)}
+.ubtn:hover{transform:translateY(-1px);box-shadow:0 10px 32px rgba(10,132,255,.45)}
+.ubtn:active{transform:translateY(0)}
+.oftr{display:flex;align-items:center;justify-content:center;gap:5px;margin-top:8px;font-size:10.5px;color:var(--t2)}
+.gdot{width:6px;height:6px;border-radius:50%;background:#64d2ff;animation:blink 2s infinite;box-shadow:0 0 6px rgba(100,210,255,.5)}
+#clm{color:var(--gold);font-weight:700}
+
+.mockup-wrap{
+  display:flex;
+  justify-content:center;
+  align-items:center;
+  margin:6px 0 18px;
+}
+.product-mockup{
+  --mw:166px;
+  --mh:212px;
+  width:var(--mw);
+  height:var(--mh);
+  position:relative;
+  filter:drop-shadow(0 18px 20px rgba(0,0,0,.24));
+}
+.product-mockup::after{
+  content:'';
+  position:absolute;
+  left:10px;
+  right:10px;
+  bottom:-22px;
+  height:18px;
+  border-radius:50%;
+  background:radial-gradient(ellipse,rgba(0,0,0,.24),transparent 70%);
+}
+.mock-front{
+  position:absolute;
+  inset:0;
+  overflow:hidden;
+  border-radius:10px;
+  background:
+    linear-gradient(125deg,rgba(255,255,255,.20),transparent 18%,transparent 70%,rgba(0,0,0,.30)),
+    linear-gradient(180deg,rgba(100,210,255,.10),transparent 45%),
+    #102033;
+  border:1px solid rgba(205,232,255,.42);
+  box-shadow:inset 0 0 0 1px rgba(100,210,255,.08),inset 0 -40px 70px rgba(0,0,0,.28),0 0 0 1px rgba(4,9,20,.20);
+}
+.mock-front::before{
+  content:'';
+  position:absolute;
+  inset:-12px;
+  opacity:.42;
+  background:
+    linear-gradient(135deg,transparent 13%,rgba(100,210,255,.22) 14%,transparent 15%,transparent 52%,rgba(255,255,255,.12) 53%,transparent 54%),
+    repeating-linear-gradient(90deg,transparent 0 24px,rgba(57,226,205,.20) 24px 34px,transparent 34px 48px);
+  transform:translateY(74px);
+}
+.mock-badge{
+  position:absolute;
+  top:18px;
+  left:20px;
+  width:42px;
+  height:42px;
+  border-radius:50%;
+  display:flex;
+  align-items:center;
+  justify-content:center;
+  background:linear-gradient(135deg,#65e5da,#159cba);
+  color:#fff;
+  font-family:var(--fd);
+  font-size:21px;
+  font-weight:900;
+  box-shadow:0 8px 22px rgba(29,203,209,.30);
+}
+.mock-title{
+  position:absolute;
+  left:20px;
+  right:18px;
+  top:72px;
+  color:#fff;
+  font-family:var(--fd);
+  font-size:27px;
+  font-weight:900;
+  line-height:.95;
+  letter-spacing:-.45px;
+  text-transform:uppercase;
+  text-shadow:0 3px 12px rgba(0,0,0,.42);
+  overflow-wrap:normal;
+}
+.mock-pill{
+  position:absolute;
+  left:20px;
+  right:18px;
+  bottom:39px;
+  padding:8px 7px;
+  border-radius:5px;
+  background:#fff;
+  color:#159cba;
+  font-family:var(--fd);
+  font-size:10.5px;
+  font-weight:900;
+  line-height:1.05;
+  text-transform:uppercase;
+  text-align:center;
+  box-shadow:0 7px 13px rgba(0,0,0,.25);
+}
+.mock-url{
+  position:absolute;
+  left:20px;
+  right:18px;
+  bottom:14px;
+  color:rgba(255,255,255,.78);
+  font-size:9.5px;
+  font-weight:800;
+  text-align:center;
+}
+.product-mockup.compact{
+  --mw:128px;
+  --mh:164px;
+  filter:drop-shadow(0 17px 16px rgba(0,0,0,.26));
+}
+.product-mockup.compact .mock-badge{width:32px;height:32px;top:13px;left:15px;font-size:16px}
+.product-mockup.compact .mock-title{top:56px;left:15px;right:12px;font-size:20px;letter-spacing:-.3px}
+.product-mockup.compact .mock-pill{left:15px;right:12px;bottom:31px;font-size:8px;padding:5px}
+.product-mockup.compact .mock-url{left:16px;right:12px;bottom:11px;font-size:7px}
+
+/* ── TOASTS ── */
+#toasts{position:fixed;top:62px;right:14px;z-index:999;display:flex;flex-direction:column;gap:6px;pointer-events:none}
+.toast{
+  background:rgba(29,34,40,.95);backdrop-filter:var(--blur);
+  border:1px solid var(--border);border-left:3px solid var(--accent);border-radius:var(--r12);
+  padding:9px 13px;font-size:12px;color:var(--t1);
+  display:flex;align-items:center;gap:8px;max-width:230px;
+  box-shadow:0 8px 28px rgba(0,0,0,.45);
+  animation:tIn .3s cubic-bezier(.175,.885,.32,1.275),tOut .3s ease 2.7s forwards;
+}
+.toast.g{border-left-color:var(--gold)}
+@keyframes tIn{from{opacity:0;transform:translateX(14px)}to{opacity:1;transform:translateX(0)}}
+@keyframes tOut{from{opacity:1;transform:translateX(0)}to{opacity:0;transform:translateX(14px)}}
+
+/* ── MODALS ── */
+#ovl,#payOvl{
+  display:none;position:fixed;inset:0;
+  background:rgba(0,0,0,.58);
+  backdrop-filter:blur(14px) saturate(130%);-webkit-backdrop-filter:blur(14px) saturate(130%);
+  z-index:200;align-items:center;justify-content:center;
+}
+#ovl.open,#payOvl.open{display:flex}
+.modal{
+  background:rgba(24,29,35,.97);backdrop-filter:var(--blur);-webkit-backdrop-filter:var(--blur);
+  border:1px solid rgba(255,255,255,.10);border-radius:var(--r24);
+  padding:26px 22px 22px;max-width:365px;width:92%;position:relative;
+  animation:mModal .3s cubic-bezier(.175,.885,.32,1.275);
+  box-shadow:0 32px 80px rgba(0,0,0,.6);
+}
+@keyframes mModal{from{opacity:0;transform:scale(.92) translateY(12px)}to{opacity:1;transform:scale(1) translateY(0)}}
+.mx{
+  position:absolute;top:13px;right:13px;
+  background:rgba(255,255,255,.07);border:none;width:26px;height:26px;border-radius:50%;
+  color:var(--t3);cursor:pointer;font-size:13px;
+  display:flex;align-items:center;justify-content:center;transition:all .18s;
+}
+.mx:hover{background:rgba(255,255,255,.13);color:var(--t1)}
+
+/* Offer modal content */
+#mO h2{font-family:var(--fd);font-size:20px;font-weight:800;letter-spacing:-.6px;margin-bottom:5px;line-height:1.2}
+#mO h2 em{font-style:normal;color:var(--accentL)}
+.mosub{font-size:12.5px;color:var(--t2);line-height:1.55;margin-bottom:16px}
+.moperks{display:flex;flex-direction:column;gap:7px;margin-bottom:17px}
+.mop{display:flex;align-items:center;gap:10px;background:rgba(255,255,255,.04);border:1px solid var(--borderS);border-radius:var(--r12);padding:9px 12px}
+.moi{font-size:18px;flex-shrink:0}
+.mol{font-weight:500;color:var(--t1);font-size:12px}
+.mos{font-size:10.5px;color:var(--t3);margin-top:1px}
+.moprice{text-align:center;margin-bottom:14px;display:flex;align-items:baseline;justify-content:center;gap:8px}
+.moorig{font-size:14px;color:var(--t3);text-decoration:line-through}
+.moamt{font-family:var(--fd);font-size:38px;font-weight:800;letter-spacing:-2px}
+.moper{font-size:12px;color:var(--t3)}
+.mocta{
+  width:100%;border:none;cursor:pointer;
+  background:linear-gradient(135deg,#0a84ff,#005ecb);
+  color:#fff;font-family:var(--fd);font-size:14px;font-weight:700;
+  padding:13px;border-radius:var(--r12);transition:all .22s;
+  box-shadow:0 4px 18px rgba(10,132,255,.35),inset 0 1px 0 rgba(255,255,255,.12);
+}
+.mocta:hover{transform:translateY(-1px);box-shadow:0 8px 28px rgba(10,132,255,.45)}
+.mogu{display:flex;align-items:center;justify-content:center;gap:4px;margin-top:9px;font-size:11px;color:var(--t3)}
+
+#payOvl{
+  background:linear-gradient(135deg,rgba(207,220,255,.72),rgba(180,191,255,.76));
+  padding:32px;
+  overflow-y:auto;
+}
+#payModal{
+  width:min(940px,94vw);
+  max-width:none;
+  padding:0;
+  overflow:hidden;
+  border-radius:18px;
+  border:1px solid rgba(255,255,255,.72);
+  background:rgba(239,246,255,.9);
+  box-shadow:0 30px 90px rgba(61,76,143,.24),inset 0 1px 0 rgba(255,255,255,.86);
+  color:#151a2d;
+}
+#payModal .mx{
+  top:24px;right:26px;
+  width:24px;height:24px;border-radius:7px;
+  border:1px solid rgba(70,87,132,.28);
+  background:rgba(255,255,255,.48);
+  color:#52627d;font-size:14px;font-weight:800;
+}
+#payModal .mx:hover{background:#fff;color:#22304d}
+.paygrid{
+  display:grid;
+  grid-template-columns:minmax(300px,.95fr) minmax(300px,.85fr);
+  gap:56px;
+  padding:44px 68px 52px;
+}
+.payleft h2{
+  font-family:var(--fd);
+  font-size:34px;
+  line-height:1;
+  letter-spacing:-1px;
+  color:#315fdc;
+  margin-bottom:8px;
+}
+.paysub{
+  font-size:21px;
+  line-height:1.25;
+  color:#9aa9cb;
+  margin-bottom:32px;
+}
+.payinfo{
+  min-height:430px;
+  padding:34px 32px;
+  border-radius:8px;
+  background:linear-gradient(180deg,#c8d8ff,#bdc9fb);
+  box-shadow:inset 0 1px 0 rgba(255,255,255,.36);
+  color:#151a2d;
+}
+.payinfo .mockup-wrap{margin:0 0 26px}
+.payinfo .product-mockup{
+  --mw:150px;
+  --mh:192px;
+}
+.paystep{
+  font-size:16px;
+  line-height:1.45;
+  font-weight:700;
+  margin-bottom:28px;
+}
+.paycards{
+  display:grid;
+  grid-template-columns:repeat(4,1fr);
+  gap:10px;
+  margin:10px 0 30px;
+  padding:10px;
+  border-radius:6px;
+  background:rgba(255,255,255,.66);
+}
+.paycard{
+  height:42px;
+  display:flex;
+  align-items:center;
+  justify-content:center;
+  border-radius:5px;
+  background:#fff;
+  color:#2453b7;
+  font-family:Arial,Helvetica,sans-serif;
+  font-size:12px;
+  font-weight:900;
+  letter-spacing:-.2px;
+  box-shadow:0 1px 0 rgba(255,255,255,.9),0 5px 12px rgba(80,100,170,.08);
+}
+.paycard.mc{color:#c43623}
+.paycard.amex{color:#16213d;font-size:9px;line-height:1;text-align:center}
+.paycard.disc{color:#d8751a}
+.payprivacy{
+  max-width:330px;
+  margin-bottom:58px;
+  font-size:16px;
+  line-height:1.38;
+  font-weight:700;
+  text-align:center;
+}
+.payprivacy a,.paysupport a{color:#315fdc;text-decoration:underline;text-underline-offset:3px}
+.paysupport{
+  font-size:15px;
+  line-height:1.7;
+  font-weight:800;
+}
+.payright{
+  padding-top:58px;
+}
+.payline{
+  display:flex;
+  align-items:flex-start;
+  justify-content:space-between;
+  gap:14px;
+  margin:0 0 20px;
+}
+.payname{
+  max-width:270px;
+  font-family:var(--fd);
+  font-size:17px;
+  font-weight:800;
+  line-height:1.18;
+  color:#151a2d;
+}
+.payamt{
+  min-width:max-content;
+  padding:8px 12px;
+  border-radius:999px;
+  background:rgba(49,95,220,.1);
+  border:1px solid rgba(49,95,220,.16);
+  font-family:var(--fd);
+  font-size:20px;
+  font-weight:900;
+  color:#315fdc;
+  white-space:nowrap;
+}
+.paycopy{
+  display:none;
+}
+#paymentElement{
+  margin:0 0 18px;
+}
+.paycta{
+  width:57%;
+  min-width:236px;
+  margin-top:8px;
+  padding:16px 18px;
+  border-radius:11px;
+  background:linear-gradient(135deg,#3467e8,#8556e8);
+  box-shadow:0 14px 28px rgba(80,86,207,.26),inset 0 1px 0 rgba(255,255,255,.24);
+  font-family:var(--fd);
+  font-size:15px;
+  font-weight:800;
+}
+.payback{
+  margin-top:24px;
+  border:0;
+  background:none;
+  color:#8c99bb;
+  font-family:var(--fb);
+  font-size:13px;
+  font-weight:700;
+  cursor:pointer;
+}
+.payback:hover{color:#315fdc}
+.paynotice{
+  display:flex;
+  gap:8px;
+  align-items:flex-start;
+  max-width:410px;
+  padding:12px 0 0;
+  margin-top:18px;
+  border-top:1px solid rgba(49,95,220,.1);
+  font-size:11px;
+  line-height:1.45;
+  color:#7784a4;
+}
+.payerr{
+  min-height:20px;
+  margin-top:12px;
+  max-width:410px;
+  font-size:12px;
+  line-height:1.4;
+  color:#c9304b;
+}
+.payok{color:#315fdc}
+.paycta[disabled]{opacity:.58;cursor:not-allowed;transform:none;box-shadow:none}
+.paycomplete{
+  display:none;
+  margin-top:18px;
+  padding:20px;
+  max-width:420px;
+  border-radius:14px;
+  background:linear-gradient(180deg,rgba(49,95,220,.1),rgba(255,255,255,.58));
+  border:1px solid rgba(49,95,220,.16);
+  box-shadow:inset 0 1px 0 rgba(255,255,255,.7);
+}
+.paydone{
+  width:42px;
+  height:42px;
+  display:flex;
+  align-items:center;
+  justify-content:center;
+  border-radius:50%;
+  margin-bottom:12px;
+  background:#315fdc;
+  color:#fff;
+  font-size:22px;
+  font-weight:900;
+}
+.paycomplete h3{
+  font-family:var(--fd);
+  font-size:22px;
+  line-height:1.1;
+  letter-spacing:-.35px;
+  color:#151a2d;
+  margin-bottom:7px;
+}
+.paycomplete p{
+  font-size:13px;
+  line-height:1.45;
+  color:#52627d;
+  margin-bottom:15px;
+}
+.paydownload{
+  display:flex;
+  align-items:center;
+  justify-content:center;
+  width:100%;
+  min-height:48px;
+  border-radius:11px;
+  background:linear-gradient(135deg,#3467e8,#8556e8);
+  color:#fff;
+  font-family:var(--fd);
+  font-size:15px;
+  font-weight:900;
+  text-decoration:none;
+  box-shadow:0 14px 28px rgba(80,86,207,.26),inset 0 1px 0 rgba(255,255,255,.24);
+}
+.paydownload.is-disabled{
+  pointer-events:none;
+  opacity:.58;
+  background:#7f8aa8;
+}
+.paysecondary{
+  display:block;
+  margin-top:12px;
+  color:#315fdc;
+  font-size:12px;
+  font-weight:800;
+  text-align:center;
+  text-decoration:underline;
+  text-underline-offset:3px;
+}
+#payModal.is-complete #paymentElement,
+#payModal.is-complete .paycopy,
+#payModal.is-complete .paycta,
+#payModal.is-complete .payback,
+#payModal.is-complete .paynotice{
+  display:none;
+}
+#payModal.is-complete .paycomplete{display:block}
+
+@media (max-width:760px){
+  #payOvl{padding:14px}
+  #payModal{width:min(100%,520px);border-radius:16px}
+  .paygrid{grid-template-columns:1fr;gap:22px;padding:30px 18px 24px}
+  #payModal .mx{top:14px;right:14px}
+  .payleft h2{font-size:30px}
+  .paysub{font-size:18px;margin-bottom:18px}
+  .payinfo{min-height:auto;padding:22px 18px}
+  .payinfo .product-mockup{--mw:126px;--mh:160px}
+  .paystep{font-size:14px;margin-bottom:18px}
+  .paycards{grid-template-columns:repeat(2,1fr);margin-bottom:20px}
+  .payprivacy{max-width:none;margin-bottom:24px;font-size:14px;text-align:left}
+  .payright{padding-top:0}
+  .payline{align-items:flex-start}
+  .payname{font-size:16px}
+  .payamt{font-size:18px}
+  .paycta{width:100%;min-width:0}
+  .paycomplete{max-width:none}
+}
+
+#handoff{
+  position:fixed;inset:0;z-index:500;display:none;
+  align-items:center;justify-content:center;text-align:center;
+  background:rgba(4,6,8,.72);
+  backdrop-filter:blur(22px) saturate(145%);
+  -webkit-backdrop-filter:blur(22px) saturate(145%);
+}
+#handoff.open{display:flex;animation:hFade .24s ease forwards}
+.handoffCard{
+  width:min(360px,88vw);
+  padding:26px 22px 24px;
+  border:1px solid rgba(255,255,255,.1);
+  border-radius:var(--r24);
+  background:rgba(22,27,33,.82);
+  box-shadow:0 28px 90px rgba(0,0,0,.65);
+  transform:translateY(8px);
+  animation:hCard .34s cubic-bezier(.175,.885,.32,1.275) forwards;
+}
+.hspin{
+  width:42px;height:42px;border-radius:50%;margin:0 auto 15px;
+  border:3px solid rgba(255,255,255,.12);
+  border-top-color:var(--accentL);
+  animation:hSpin .8s linear infinite;
+}
+.handoffCard h3{font-family:var(--fd);font-size:20px;font-weight:800;letter-spacing:-.45px;margin-bottom:5px}
+.handoffCard p{font-size:12.5px;color:var(--t2);line-height:1.45}
+@keyframes hFade{from{opacity:0}to{opacity:1}}
+@keyframes hCard{to{transform:translateY(0)}}
+@keyframes hSpin{to{transform:rotate(360deg)}}
+
+</style>
+</head>
+<body>
+<div id="app">
+
+  <!-- TOP BAR -->
+  <div id="top">
+    <div class="livebadge"><div class="ldot"></div>LIVE</div>
+    <div class="ttl">
+      <h1>Unlock Your Roofing Business — Free Live Training</h1>
+      <p>with Marcus Reed · 8,000+ students trained</p>
+    </div>
+    <div class="vpill">
+      <svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><path d="M1 12s4-8 11-8 11 8 11 8-4 8-11 8-11-8-11-8z"/><circle cx="12" cy="12" r="3"/></svg>
+      <span><span id="vc">2</span> watching</span>
+    </div>
+    <div class="ltoggle">
+      <button class="lb" id="b169" onclick="setL('169')">
+        <svg width="12" height="9" viewBox="0 0 12 9" fill="currentColor"><rect width="12" height="9" rx="1.5"/></svg>16:9
+      </button>
+      <button class="lb active" id="b916" onclick="setL('916')">
+        <svg width="8" height="12" viewBox="0 0 8 12" fill="currentColor"><rect width="8" height="12" rx="1.5"/></svg>9:16
+      </button>
+    </div>
+  </div>
+
+  <!-- MAIN -->
+  <div id="main" class="l916">
+
+    <!-- VIDEO PANEL -->
+    <div id="vp">
+      <div class="vpbg">
+        <video id="lessonVideo" autoplay muted loop playsinline webkit-playsinline preload="auto">
+          <source src="02_vertical_lesson.mp4" type="video/mp4">
+        </video>
+      </div>
+      <div class="vvig"></div>
+      <div class="vptop">
+        <div class="iplabel">Previously Streamed</div>
+        <div id="timer">00:00</div>
+      </div>
+      <div id="hearts"></div>
+      <div class="vstrip" id="vs"></div>
+    </div>
+
+    <!-- SIDEBAR -->
+    <div id="sb">
+      <div class="hstrip">
+        <div class="hrow">
+          <div class="hav">M</div>
+          <div>
+            <div class="hname">Marcus Reed</div>
+            <div class="hsub">Roofing Business Coach · 8k+ Students</div>
+          </div>
+        </div>
+        <button class="supbtn" onclick="openO()">
+          <svg width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><rect x="3" y="11" width="18" height="11" rx="2" ry="2"/><path d="M7 11V7a5 5 0 0 1 10 0v4"/></svg>
+          Unlock Full Access!
+        </button>
+      </div>
+
+      <div id="feed"></div>
+
+      <div class="iw">
+        <div id="ep"></div>
+        <div class="cbar">
+          <div class="irow">
+          <input id="ci" type="text" placeholder="Say something…" maxlength="25" onkeydown="ky(event)">
+            <button class="etrig" onclick="tog(event)">😊</button>
+            <button class="sbtn" onclick="snd()">
+              <svg width="11" height="11" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round"><line x1="22" y1="2" x2="11" y2="13"/><polygon points="22 2 15 22 11 13 2 9 22 2"/></svg>
+            </button>
+          </div>
+        </div>
+      </div>
+
+    </div>
+
+    <!-- PRIVATE CHAT / PRO PANEL -->
+    <div id="pc">
+      <div class="pchead">
+        <div class="pctag">Private Chat</div>
+        <div class="pctitle">Black & White Roofing Assistant</div>
+        <div class="pcsub">Ask about Pro, the sales script, or what you need to start.</div>
+      </div>
+      <div class="pcfeed" id="pcfeed">
+        <div class="pcmsg">
+          <div class="pcav">BW</div>
+          <div class="pcb">Watch the training first. When the door pitch clicks, Pro unlocks the exact scripts, trackers, and startup steps so you can stop guessing and start moving.</div>
+        </div>
+      </div>
+      <div class="pcbar">
+        <div class="pcrow">
+          <input id="pci" type="text" placeholder="Private message..." maxlength="120" onkeydown="pcky(event)">
+          <button class="sbtn" onclick="pcsnd()">
+            <svg width="11" height="11" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round"><line x1="22" y1="2" x2="11" y2="13"/><polygon points="22 2 15 22 11 13 2 9 22 2"/></svg>
+          </button>
+        </div>
+      </div>
+      <div id="offer">
+        <div class="ocard">
+          <div class="oey">🔥 Joined Pro — Live Replay</div>
+          <div class="ottl">Unlock Pro To Get The <em>Roofing<br>Starter Kit</em></div>
+          <div class="osub">Get the tools you need to start: sales script, job tracker, templates, and more.</div>
+          <div class="perks">
+            <div class="perk"><span class="pi">✅</span>Working roofing sales script</div>
+            <div class="perk"><span class="pi">✅</span>Things you need to start a roofing business</div>
+            <div class="perk"><span class="pi">✅</span>Job tracker, templates, and checklists</div>
+            <div class="perk"><span class="pi">✅</span>More training after this free lesson</div>
+          </div>
+          <button class="ubtn" onclick="goUnlock()">Unlock Full Access!</button>
+          <div class="oftr">
+            <div class="gdot"></div>
+            <span><span id="clm">23</span> people joined Pro right now</span>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+
+<div id="toasts"></div>
+
+<div id="ovl" onclick="ovc(event)">
+  <div class="modal" id="mO">
+    <button class="mx" onclick="ca()">✕</button>
+    <h2>Unlock Full Access</h2>
+    <p class="mosub">Send chat is part of Pro. Unlock the tools built to help you start moving in roofing.</p>
+    <div class="moperks">
+      <div class="mop"><div class="moi">📋</div><div><div class="mol">Roofing Sales Scripts</div><div class="mos">What to say at the door, on calls, and in follow-up</div></div></div>
+      <div class="mop"><div class="moi">🏠</div><div><div class="mol">Business Startup Checklist</div><div class="mos">The basics you need before taking roofing jobs</div></div></div>
+      <div class="mop"><div class="moi">🧰</div><div><div class="mol">Templates & Trackers</div><div class="mos">Track leads, jobs, estimates, and follow-ups</div></div></div>
+      <div class="mop"><div class="moi">🎥</div><div><div class="mol">More Pro Training</div><div class="mos">Next lessons after the live stream</div></div></div>
+    </div>
+    <div class="moprice"><span class="moorig">$997</span><span class="moamt">$297</span><span class="moper">today only</span></div>
+    <button class="mocta" onclick="goUnlock()">Unlock Full Access!</button>
+    <div class="mogu">🛡️ 30-day money-back guarantee · No questions asked</div>
+  </div>
+</div>
+
+<div id="payOvl" onclick="payOvc(event)">
+  <div class="modal" id="payModal">
+    <button class="mx" onclick="closePayment()">✕</button>
+    <div class="paygrid">
+      <div class="payleft">
+        <h2>Checkout</h2>
+        <div class="paysub">You've one more step to go...</div>
+        <div class="payinfo">
+          <div class="mockup-wrap" id="payProductMockup"></div>
+          <div class="paystep">1. Please fill the fields with correct details to continue your payment</div>
+          <div class="paystep">2. We accept following cards</div>
+          <div class="paycards" aria-label="Accepted cards">
+            <div class="paycard">VISA</div>
+            <div class="paycard mc">MasterCard</div>
+            <div class="paycard amex">AMERICAN<br>EXPRESS</div>
+            <div class="paycard disc">DISCOVER</div>
+          </div>
+          <div class="payprivacy">3. We won't share any details with third-party for more info Read our <a href="#">Privacy Policy</a></div>
+          <div class="paysupport">Need Support?<br><a href="#">Contact Us</a></div>
+        </div>
+      </div>
+      <div class="payright">
+        <div class="payline">
+          <div class="payname" id="payProductName">Roofing Pro Full Access</div>
+          <div class="payamt" id="payProductAmount">$297</div>
+        </div>
+        <p class="paycopy">Enter your card once. Stripe securely saves it so future offer clicks can be charged instantly for that selected product.</p>
+        <div id="paymentElement"></div>
+        <button class="mocta paycta" id="paySubmit" onclick="submitCardPayment()">Continue payment</button>
+        <button class="payback" type="button" onclick="closePayment()">← Go back</button>
+        <div class="paynotice"><span>🔒</span><span>By paying, you authorize future in-app purchases you click to be charged to this saved card. Your card details are handled by Stripe and are not stored in this app.</span></div>
+        <div class="payerr" id="payMessage" aria-live="polite"></div>
+        <div class="paycomplete" id="payComplete">
+          <div class="paydone">✓</div>
+          <h3>Payment confirmed</h3>
+          <p>Your purchase is ready. Download it now without leaving this screen.</p>
+          <a class="paydownload is-disabled" id="payDownload" href="#" target="_blank" rel="noopener">Preparing download...</a>
+          <a class="paysecondary" id="payBlueprintLink" href="https://100kroofingblueprint.netlify.app/" target="_blank" rel="noopener">Open Roofing Blueprint</a>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+
+<div id="handoff" aria-live="polite" aria-hidden="true">
+  <div class="handoffCard">
+    <div class="hspin"></div>
+    <h3>Opening Your Roofing Blueprint</h3>
+    <p>Loading the scripts, startup steps, and Pro tools now.</p>
+  </div>
+</div>
+
+<script src="https://js.stripe.com/v3/"></script>
+<script>
+const NAMES=['Tyler','Jordan','Aisha','Marco','Priya','Liam','Sofia','Chen','Destiny','Ryan','Camille','Jake','Mia','Kevin','Leila','Brandon','Zoe','Darius','Hannah','Ethan','Nadia','Carlos','Abby','Finn','Yasmin','Derek','Tessa','Omar','Riley','Alexis','Sam','Yuri','Fatima','Chase','Brooke'];
+const LOCS=['Texas','Florida','Ohio','Georgia','California','Arizona','Nevada','North Carolina','Illinois','Michigan','New York','Colorado','Tennessee','Virginia','Washington'];
+const COLS=['#0a84ff','#64d2ff','#5e9cff','#8e8e93','#aeb6c2','#2f80ed','#5ac8fa','#6f7f92','#3a4654','#d8e6f3'];
+const MSGS=[
+  'Anybody here new to roofing?',
+  'I am trying to learn roofing sales first',
+  'That door approach makes sense',
+  'What do you say when they say no?',
+  'The sales script sounds useful ngl',
+  'How many doors should a beginner knock?',
+  'I need that objection handling part',
+  'Roofing jobs are everywhere in my city',
+  'Do you start with repairs or full roofs?',
+  'I found companies hiring on Google',
+  'Angi shows a lot of roofers near me',
+  'I want to know how to price jobs',
+  'The follow up part is what I miss',
+  'Does Pro include the script?',
+  'I need the checklist before I start',
+  'This is way clearer than YouTube',
+  'I used to be scared to knock doors',
+  'I want the script before I try this',
+  'Do you need a license first?',
+  'I am taking notes on the door pitch',
+  'Ngl i used the sales Script and it actually worked but i also knocked on more than 20 doors lol',
+  'That is the part I needed to hear',
+  'The script probably saves a lot of guessing',
+  'I just need a simple step by step',
+  'Pro looks like it has the real tools'
+];
+const JOIN=['joined the stream','tuned in from {l}','just joined 👀','is watching live','just entered the room 🙌'];
+const EMOJIS=['👍','❤️','👍','❤️','🔥'];
+const PRO_UNLOCK_URL='https://100kroofingblueprint.netlify.app/';
+const STREAM_STATE_KEY='bwRoofingLivestreamState';
+const PAYMENT_STATE_KEY='bwRoofingStripePayment';
+const PURCHASES_KEY='bwRoofingPurchases';
+const PRODUCTS={
+  full_access:{name:'Roofing Pro Full Access',amount:29700,display:'$297',mockTitle:'ROOFING|PRO',mockPill:'FULL ACCESS'},
+  door_pitch:{name:'Steal The Door Pitch That Gets Homeowners Talking',amount:700,display:'$7',mockTitle:'DOOR|PITCH',mockPill:'SCRIPT KIT'},
+  startup_map:{name:'The 30-Day Roofing Startup Map',amount:2700,display:'$27',mockTitle:'30-DAY|ROOFING',mockPill:'STARTUP MAP'},
+  leads_without_lists:{name:'Find Roofing Leads Without Buying Bad Lead Lists',amount:900,display:'$9',mockTitle:'ROOFING|LEADS',mockPill:'NO LISTS'},
+  knocking_kit:{name:'Door Knocking Kit For Your First 20 Houses',amount:1700,display:'$17',mockTitle:'DOOR|KNOCKING',mockPill:'20 HOUSE KIT'},
+  tracker_pack:{name:'Estimate + Job Tracker Pack',amount:1900,display:'$19',mockTitle:'JOB|TRACKER',mockPill:'ESTIMATE PACK'},
+  objection_answers:{name:'Objection Answers You Can Use On The Spot',amount:1100,display:'$11',mockTitle:'OBJECTION|ANSWERS',mockPill:'RESPONSE KIT'},
+  action_sprint:{name:'First 7 Days Action Sprint',amount:2700,display:'$27',mockTitle:'7-DAY|SPRINT',mockPill:'ACTION PLAN'},
+  close_kit:{name:'The Beginner Roofing Close Kit',amount:1700,display:'$17',mockTitle:'ROOFING|CLOSE',mockPill:'BEGINNER KIT'}
+};
+const lead=(()=>{try{return JSON.parse(localStorage.getItem('roofingSignupLead')||'{}')}catch{return {}}})();
+const leadName=(lead.name||'').trim();
+const leadFirstName=leadName.split(/\s+/)[0]||'there';
+const leadEmail=lead.email||'';
+const savedState=(()=>{try{return JSON.parse(localStorage.getItem(STREAM_STATE_KEY)||'{}')}catch{return {}}})();
+const navEntry=performance.getEntriesByType?.('navigation')?.[0];
+const isRefresh=navEntry ? navEntry.type==='reload' : performance.navigation?.type===1;
+
+let V=Number.isFinite(savedState.V)?savedState.V:2;
+let S=Number.isFinite(savedState.S)?savedState.S:randInt(600,1800);
+let CL=Number.isFinite(savedState.CL)?savedState.CL:23;
+let pool=Array.isArray(savedState.pool)?savedState.pool:[];
+let sa=null,videoMuted=typeof savedState.videoMuted==='boolean'?savedState.videoMuted:true;
+let V_RAMPING=typeof savedState.V_RAMPING==='boolean'?savedState.V_RAMPING:true;
+let V_TARGET=Number.isFinite(savedState.V_TARGET)?savedState.V_TARGET:randInt(295,300);
+let heartIndex=Number.isFinite(savedState.heartIndex)?savedState.heartIndex:0;
+let offerIndex=Number.isFinite(savedState.offerIndex)?savedState.offerIndex:0;
+let liveVideoStartMs=(isRefresh&&Number.isFinite(savedState.liveVideoStartMs))?savedState.liveVideoStartMs:Date.now();
+let activeOfferTimer=null;
+let stripe=null;
+let stripeElements=null;
+let activePaymentProductId='full_access';
+let activePaymentClientSecret='';
+let payBusy=false;
+const lessonVideo=document.getElementById('lessonVideo');
+let videoSynced=false;
+function syncLiveVideoPosition(){
+  if(!Number.isFinite(lessonVideo.duration)||lessonVideo.duration<=0)return;
+  const elapsed=((Date.now()-liveVideoStartMs)/1000)%lessonVideo.duration;
+  if(Number.isFinite(elapsed)){
+    lessonVideo.currentTime=elapsed;
+    videoSynced=true;
+  }
+}
+function prepareLessonVideo(){
+  lessonVideo.loop=true;
+  lessonVideo.autoplay=true;
+  lessonVideo.defaultMuted=true;
+  lessonVideo.playsInline=true;
+  lessonVideo.setAttribute('playsinline','');
+  lessonVideo.setAttribute('webkit-playsinline','');
+  if(lessonVideo.readyState===0)lessonVideo.load();
+}
+function playLesson(){
+  prepareLessonVideo();
+  if(!videoSynced)syncLiveVideoPosition();
+  lessonVideo.muted=videoMuted;
+  const p=lessonVideo.play();
+  if(p&&typeof p.catch==='function')p.catch(()=>{
+    videoMuted=true;
+    lessonVideo.muted=true;
+    lessonVideo.defaultMuted=true;
+    saveState();
+    const retry=lessonVideo.play();
+    if(retry&&typeof retry.catch==='function')retry.catch(()=>{});
+  });
+}
+lessonVideo.addEventListener('click',()=>{
+  videoMuted=!videoMuted;
+  lessonVideo.muted=videoMuted;
+  saveState();
+  playLesson();
+});
+lessonVideo.addEventListener('error',()=>{
+  lessonVideo.load();
+  setTimeout(playLesson,300);
+});
+lessonVideo.addEventListener('loadedmetadata',()=>{syncLiveVideoPosition();playLesson()},{once:true});
+lessonVideo.addEventListener('loadeddata',playLesson,{once:true});
+lessonVideo.addEventListener('canplay',playLesson,{once:true});
+window.addEventListener('pageshow',()=>{syncLiveVideoPosition();playLesson()});
+document.addEventListener('visibilitychange',()=>{if(!document.hidden){syncLiveVideoPosition();playLesson()}});
+prepareLessonVideo();
+setTimeout(playLesson,500);
+setTimeout(playLesson,1500);
+setTimeout(playLesson,3000);
+setInterval(saveState,5000);
+function rand(a){return a[Math.floor(Math.random()*a.length)]}
+function randInt(a,b){return Math.floor(Math.random()*(b-a+1))+a}
+function col(n){return COLS[n.charCodeAt(0)%COLS.length]}
+function ini(n){return n.split(' ').map(w=>w[0]).join('').slice(0,2).toUpperCase()}
+function esc(text){
+  return String(text||'').replace(/[&<>"']/g,(char)=>({
+    '&':'&amp;',
+    '<':'&lt;',
+    '>':'&gt;',
+    '"':'&quot;',
+    "'":'&#39;'
+  })[char]);
+}
+function productMockup(productId='full_access',compact=false){
+  const product=PRODUCTS[productId]||PRODUCTS.full_access;
+  const name=String(product.name||'Roofing Pro Full Access').trim();
+  const titleHtml=esc(product.mockTitle||name).replace(/\|/g,'<br>');
+  const pillText=String(product.mockPill||product.display||'DIGITAL KIT');
+  return `<div class="product-mockup${compact?' compact':''}" aria-label="${esc(name)} digital product mockup">
+    <div class="mock-front">
+      <div class="mock-badge">↗</div>
+      <div class="mock-title">${titleHtml}</div>
+      <div class="mock-pill">${esc(pillText)}</div>
+      <div class="mock-url">blackwhiteroofing.pro</div>
+    </div>
+  </div>`;
+}
+
+function getSavedPayment(){
+  try{return JSON.parse(localStorage.getItem(PAYMENT_STATE_KEY)||'{}')}catch{return {}}
+}
+function setSavedPayment(data){
+  localStorage.setItem(PAYMENT_STATE_KEY,JSON.stringify(data));
+}
+function getPurchases(){
+  try{return JSON.parse(localStorage.getItem(PURCHASES_KEY)||'[]')}catch{return []}
+}
+function savePurchase(productId,details={}){
+  const purchases=getPurchases();
+  purchases.push({productId,at:new Date().toISOString(),...details});
+  localStorage.setItem(PURCHASES_KEY,JSON.stringify(purchases));
+}
+function money(amount){
+  return '$'+(amount/100).toLocaleString(undefined,{minimumFractionDigits:amount%100?2:0,maximumFractionDigits:2});
+}
+async function initStripe(){
+  if(stripe)return stripe;
+  const res=await fetch('/api/stripe/config');
+  if(!res.ok)throw new Error('Stripe is not available on this server.');
+  const config=await res.json();
+  if(!config.publishableKey)throw new Error('STRIPE_PUBLISHABLE_KEY is not set.');
+  stripe=Stripe(config.publishableKey);
+  return stripe;
+}
+function setPayMessage(message,isOk=false){
+  const el=document.getElementById('payMessage');
+  if(!el)return;
+  el.textContent=message||'';
+  el.classList.toggle('payok',Boolean(isOk));
+}
+function setPayBusy(isBusy,label='Continue payment'){
+  payBusy=isBusy;
+  const btn=document.getElementById('paySubmit');
+  if(!btn)return;
+  btn.disabled=isBusy;
+  btn.textContent=isBusy?'Processing...':label;
+}
+function resetPaymentState(){
+  document.getElementById('payModal').classList.remove('is-complete');
+  const download=document.getElementById('payDownload');
+  download.href='#';
+  download.textContent='Preparing download...';
+  download.classList.add('is-disabled');
+}
+async function fetchConfirmedPurchase(productId,paymentIntentId){
+  const res=await fetch('/api/stripe/confirm-purchase',{
+    method:'POST',
+    headers:{'Content-Type':'application/json'},
+    body:JSON.stringify({productId,paymentIntentId})
+  });
+  const data=await res.json();
+  if(!res.ok)throw new Error(data.error||'Unable to confirm purchase.');
+  return data;
+}
+function showPurchaseDownload(productId,details={}){
+  const product=PRODUCTS[productId]||PRODUCTS.full_access;
+  const downloadUrl=details.downloadUrl||details.product?.downloadUrl||product.downloadUrl||'';
+  const download=document.getElementById('payDownload');
+  document.getElementById('payProductName').textContent=product.name;
+  document.getElementById('payProductAmount').textContent=product.display||money(product.amount);
+  document.getElementById('payProductMockup').innerHTML=productMockup(productId);
+  document.getElementById('payOvl').classList.add('open');
+  document.getElementById('payModal').classList.add('is-complete');
+
+  if(downloadUrl){
+    download.href=downloadUrl;
+    download.textContent=`Download ${product.name}`;
+    download.classList.remove('is-disabled');
+  }else{
+    download.href='#';
+    download.textContent='Download link not configured yet';
+    download.classList.add('is-disabled');
+    setPayMessage('Payment confirmed. Add this product file URL in Cloudflare to enable the download button.');
+  }
+}
+function completePurchase(productId,details={}){
+  savePurchase(productId,details);
+  const product=PRODUCTS[productId]||PRODUCTS.full_access;
+  ca();
+  showPurchaseDownload(productId,details);
+  toast(`Unlocked ${product.name}`,true);
+  pcadd(`Unlocked: ${product.name}. Check your saved purchases for access.`,false);
+}
+async function openPayment(productId='full_access'){
+  activePaymentProductId=productId;
+  const product=PRODUCTS[productId]||PRODUCTS.full_access;
+  document.getElementById('payProductName').textContent=product.name;
+  document.getElementById('payProductAmount').textContent=product.display||money(product.amount);
+  document.getElementById('payProductMockup').innerHTML=productMockup(productId);
+  document.getElementById('payOvl').classList.add('open');
+  resetPaymentState();
+  setPayMessage('');
+  setPayBusy(true,'Continue payment');
+
+  try{
+    const stripeInstance=await initStripe();
+    const saved=getSavedPayment();
+    const res=await fetch('/api/stripe/create-payment-intent',{
+      method:'POST',
+      headers:{'Content-Type':'application/json'},
+      body:JSON.stringify({productId,customerId:saved.customerId||'',lead})
+    });
+    const data=await res.json();
+    if(!res.ok)throw new Error(data.error||'Unable to start payment.');
+    activePaymentClientSecret=data.clientSecret;
+    setSavedPayment({...saved,customerId:data.customerId});
+    if(stripeElements)stripeElements=null;
+    document.getElementById('paymentElement').innerHTML='';
+    stripeElements=stripeInstance.elements({
+      clientSecret:activePaymentClientSecret,
+      appearance:{
+        theme:'stripe',
+        variables:{
+          colorPrimary:'#315fdc',
+          colorText:'#151a2d',
+          colorTextSecondary:'#52627d',
+          colorBackground:'#eef5ff',
+          colorDanger:'#c9304b',
+          borderRadius:'8px',
+          fontFamily:'Figtree, Helvetica, Arial, sans-serif',
+          spacingUnit:'4px'
+        },
+        rules:{
+          '.Input':{
+            border:'1px solid #b8c5e6',
+            boxShadow:'inset 0 1px 0 rgba(255,255,255,.8)',
+            padding:'14px 15px'
+          },
+          '.Label':{
+            color:'#151a2d',
+            fontWeight:'700',
+            fontSize:'14px'
+          }
+        }
+      }
+    });
+    const paymentElement=stripeElements.create('payment');
+    paymentElement.mount('#paymentElement');
+    setPayBusy(false,`Continue payment ${product.display||money(product.amount)}`);
+  }catch(error){
+    setPayBusy(false,'Try Again');
+    setPayMessage(error.message||'Payment setup failed.');
+  }
+}
+async function submitCardPayment(){
+  if(payBusy||!stripe||!stripeElements)return;
+  setPayBusy(true);
+  setPayMessage('');
+  const {error,paymentIntent}=await stripe.confirmPayment({
+    elements:stripeElements,
+    redirect:'if_required'
+  });
+  if(error){
+    setPayBusy(false,`Continue payment ${(PRODUCTS[activePaymentProductId]||PRODUCTS.full_access).display}`);
+    setPayMessage(error.message||'Payment failed.');
+    return;
+  }
+  if(paymentIntent&&paymentIntent.status==='succeeded'){
+    const saved=getSavedPayment();
+    setSavedPayment({
+      ...saved,
+      customerId:paymentIntent.customer||saved.customerId,
+      paymentMethodId:paymentIntent.payment_method||saved.paymentMethodId
+    });
+    try{
+      const confirmed=await fetchConfirmedPurchase(activePaymentProductId,paymentIntent.id);
+      completePurchase(activePaymentProductId,{
+        paymentIntentId:paymentIntent.id,
+        product:confirmed.product,
+        downloadUrl:confirmed.product?.downloadUrl||''
+      });
+    }catch(confirmError){
+      setPayBusy(false);
+      setPayMessage(confirmError.message||'Payment was made, but the download could not be prepared.');
+    }
+    return;
+  }
+  setPayBusy(false);
+  setPayMessage('Payment is still processing. Please wait a moment.');
+}
+function closePayment(){
+  document.getElementById('payOvl').classList.remove('open');
+  setPayMessage('');
+}
+function payOvc(e){if(e.target===document.getElementById('payOvl'))closePayment()}
+async function purchaseProduct(productId='full_access'){
+  const saved=getSavedPayment();
+  const product=PRODUCTS[productId]||PRODUCTS.full_access;
+  ca();
+  if(saved.customerId&&saved.paymentMethodId){
+    setPayMessage('');
+    try{
+      toast(`Charging saved card for ${product.display||money(product.amount)}...`,true);
+      const res=await fetch('/api/stripe/charge-saved',{
+        method:'POST',
+        headers:{'Content-Type':'application/json'},
+        body:JSON.stringify({productId,customerId:saved.customerId,paymentMethodId:saved.paymentMethodId})
+      });
+      const data=await res.json();
+      if(!res.ok)throw new Error(data.error||'Saved card charge failed.');
+      completePurchase(productId,{
+        paymentIntentId:data.paymentIntentId,
+        product:data.product,
+        downloadUrl:data.product?.downloadUrl||''
+      });
+      return;
+    }catch(error){
+      if(error.message)localStorage.removeItem(PAYMENT_STATE_KEY);
+      await openPayment(productId);
+      setPayMessage(`${error.message} Please confirm your card again.`);
+      return;
+    }
+  }
+  await openPayment(productId);
+}
+function goUnlock(productId='full_access'){
+  purchaseProduct(productId);
+}
+function openBlueprintAfterPayment(){
+  const handoff=document.getElementById('handoff');
+  if(handoff){
+    handoff.classList.add('open');
+    handoff.setAttribute('aria-hidden','false');
+  }
+  document.body.style.pointerEvents='none';
+  setTimeout(()=>{window.location.href=PRO_UNLOCK_URL},650);
+}
+function saveState(){
+  localStorage.setItem(STREAM_STATE_KEY,JSON.stringify({
+    V,S,CL,pool,V_RAMPING,V_TARGET,heartIndex,offerIndex,liveVideoStartMs,videoMuted,
+    feedHTML:document.getElementById('feed')?.innerHTML||'',
+    pcHTML:document.getElementById('pcfeed')?.innerHTML||''
+  }));
+}
+
+// Timer
+function tick(){S++;const m=String(Math.floor(S/60)).padStart(2,'0'),s=String(S%60).padStart(2,'0');document.getElementById('timer').textContent=m+':'+s}
+tick();
+setInterval(tick,1000);
+
+// Viewer count — starts at 2, ramps to 295-300, then bounces
+function tv(){
+  const e=document.getElementById('vc');
+  if(V_RAMPING){
+    // Ramp up: accelerate as it climbs
+    const step = V < 50 ? randInt(2,5) : V < 150 ? randInt(5,14) : randInt(8,22);
+    V = Math.min(V + step, V_TARGET);
+    if(V >= V_TARGET) V_RAMPING = false;
+    e.style.color='#64d2ff';
+    setTimeout(()=>e.style.color='var(--t1)',500);
+  } else {
+    // Bounce between 292–302 — drop a few, gain a few
+    const drop = Math.random() > 0.45;
+    const step = randInt(1, 4);
+    V = drop ? Math.max(291, V - step) : Math.min(303, V + step);
+    e.style.color = drop ? '#8e8e93' : '#64d2ff';
+    setTimeout(()=>e.style.color='var(--t1)',600);
+  }
+  e.textContent = V.toLocaleString();
+  saveState();
+}
+setInterval(tv, V_RAMPING ? 180 : 2400);
+// Switch to slow bounce interval after ramp completes
+setTimeout(()=>{clearInterval(window._vi);window._vi=setInterval(tv,randInt(1800,3200))}, 9000);
+window._vi = setInterval(tv, 180);
+
+document.getElementById('vc').textContent=V.toLocaleString();
+document.getElementById('clm').textContent=CL;
+setInterval(()=>{CL=Math.max(10,Math.min(55,CL+randInt(-1,2)));document.getElementById('clm').textContent=CL;saveState()},4200);
+
+// Avatar strip
+function ip(){if(pool.length)return;for(let i=0;i<2;i++){const n=rand(NAMES);pool.push({n,c:col(n)})}}
+function rs(){
+  if(V_RAMPING&&pool.length<13){const n=rand(NAMES);pool.push({n,c:col(n)})}
+  else if(!V_RAMPING){
+    if(Math.random()>.42){const n=rand(NAMES);pool.push({n,c:col(n)})}
+    if(pool.length>15&&Math.random()>.5)pool.splice(randInt(0,pool.length-1),1);
+  }
+  document.getElementById('vs').innerHTML=pool.slice(0,13).map(a=>`<div class="va" style="background:${a.c}">${ini(a.n)}</div>`).join('')
+  saveState();
+}
+ip();rs();setInterval(rs,3200);
+
+// Typing indicator
+let typingEl=null;
+function showTyping(name,color){
+  if(typingEl)typingEl.remove();
+  typingEl=document.createElement('div');
+  typingEl.className='msg';
+  typingEl.style.opacity='.65';
+  typingEl.innerHTML=`<div class="mav" style="background:${color}">${ini(name)}</div><div class="mbody"><div class="mhead"><span class="mname">${name}</span></div><div class="mtxt" style="display:flex;align-items:center;gap:3px"><span style="width:5px;height:5px;background:var(--t3);border-radius:50%;animation:blink .8s infinite"></span><span style="width:5px;height:5px;background:var(--t3);border-radius:50%;animation:blink .8s .2s infinite"></span><span style="width:5px;height:5px;background:var(--t3);border-radius:50%;animation:blink .8s .4s infinite"></span></div></div>`;
+  feed.appendChild(typingEl);
+  feed.scrollTop=feed.scrollHeight;
+}
+function clearTyping(){if(typingEl){typingEl.remove();typingEl=null}}
+
+// Chat
+const feed=document.getElementById('feed');
+if(savedState.feedHTML){
+  feed.innerHTML=savedState.feedHTML;
+  feed.scrollTop=feed.scrollHeight;
+}
+function ac(type,d){
+  clearTyping();
+  const el=document.createElement('div');
+  if(type==='m'){
+    el.className='msg';
+    const t=new Date().toLocaleTimeString([],{hour:'2-digit',minute:'2-digit'});
+    el.innerHTML=`<div class="mav" style="background:${d.c}">${ini(d.n)}</div><div class="mbody"><div class="mhead"><span class="mname">${d.n}</span>${d.loc?`<span class="mloc">· ${d.loc}</span>`:''}<span class="mtime">${t}</span></div><div class="mtxt${d.me?' me':''}">${d.text}</div></div>`;
+  } else if(type==='j'){
+    el.className='nrow';el.innerHTML=`<div class="njoin">👤 <strong>${d.n}</strong> ${d.a}</div>`;
+  } else if(type==='dn'){
+    el.className='nrow';el.innerHTML=`<div class="ndon">🔓 <strong>${d.n}</strong> joined Pro</div>`;
+  }
+  feed.appendChild(el);
+  while(feed.children.length>90)feed.removeChild(feed.firstChild);
+  feed.scrollTop=feed.scrollHeight;
+  saveState();
+}
+
+// Seed first few messages immediately
+const SEED_MSGS=[
+  'Who else is trying to start in roofing?',
+  'Just joined. Is this about roofing sales?',
+  'I am here for the door script honestly',
+  'How do you find your first roofing lead?',
+  'The script part caught my attention'
+];
+if(!savedState.feedHTML){
+  SEED_MSGS.forEach((m,i)=>setTimeout(()=>{const n=rand(NAMES);ac('m',{n,c:col(n),loc:rand(LOCS),text:m})},400+i*600));
+}
+
+// Burst mode — sometimes 2-3 messages fire rapid-fire
+function fireBurst(){
+  const n=randInt(2,3);
+  for(let i=0;i<n;i++){
+    setTimeout(()=>{
+      const name=rand(NAMES);
+      ac('m',{n:name,c:col(name),loc:Math.random()>.6?rand(LOCS):'',text:rand(MSGS)});
+    },i*randInt(700,1300));
+  }
+}
+
+function autoC(){
+  const r=Math.random();
+  if(r<.15){
+    // Join notification
+    const n=rand(NAMES);
+    ac('j',{n,a:rand(JOIN).replace('{l}',rand(LOCS))});
+    // Sometimes join triggers a "hey" message
+    if(Math.random()>.55){
+      const greets=['Hey everyone','Watching from {l}','Just got here','What part are we on?'];
+      setTimeout(()=>ac('m',{n,c:col(n),loc:'',text:rand(greets).replace('{l}',rand(LOCS))}),randInt(600,1400));
+    }
+  } else if(r<.22){
+    // Joined Pro notification
+    const n=rand(NAMES);
+    ac('dn',{n});toast(`🔓 ${n} joined Pro`,true);ht();
+  } else if(r<.30){
+    // Burst of messages
+    fireBurst();
+  } else {
+    // Normal single message with typing indicator
+    const n=rand(NAMES),c=col(n);
+    showTyping(n,c);
+    setTimeout(()=>ac('m',{n,c,loc:Math.random()>.55?rand(LOCS):'',text:rand(MSGS)}),randInt(600,1400));
+  }
+}
+
+function lc(){
+  const delay=V_RAMPING?randInt(1500,2800):randInt(3600,7200);
+  setTimeout(()=>{autoC();lc()},delay);
+}
+// Start chat after seeds
+setTimeout(lc,3500);
+
+function showUnlockPopup(){document.getElementById('ovl').classList.add('open')}
+function snd(){const inp=document.getElementById('ci'),t=inp.value.trim().slice(0,25);if(!t)return;ac('m',{n:'You',c:'var(--accent)',loc:'',text:t,me:true});inp.value='';saveState();showUnlockPopup()}
+function ky(e){if(e.key==='Enter')snd()}
+
+// Private chat
+const pcfeed=document.getElementById('pcfeed');
+if(savedState.pcHTML){
+  pcfeed.innerHTML=savedState.pcHTML;
+  pcfeed.querySelectorAll('.pcmsg.offer').forEach((offer)=>offer.remove());
+}else{
+  pcfeed.innerHTML=`<div class="pcmsg">
+    <div class="pcav">BW</div>
+    <div class="pcb">Hey ${leadFirstName}, glad you made it in${leadEmail?` from ${leadEmail}`:''}. Watch the training first. When the door pitch clicks, Pro unlocks the exact scripts, trackers, and startup steps so you can stop guessing and start moving.</div>
+  </div>`;
+}
+pcfeed.scrollTop=pcfeed.scrollHeight;
+function pcadd(text,me=false){
+  const row=document.createElement('div');
+  row.className='pcmsg'+(me?' me':'');
+  row.innerHTML=`${me?'':'<div class="pcav">BW</div>'}<div class="pcb">${text}</div>`;
+  pcfeed.appendChild(row);
+  while(pcfeed.children.length>18)pcfeed.removeChild(pcfeed.firstChild);
+  pcfeed.scrollTop=pcfeed.scrollHeight;
+  saveState();
+}
+function pcoffer(productId,title,text,price){
+  const existing=pcfeed.querySelector('.pcmsg.offer');
+  if(existing)existing.remove();
+  if(activeOfferTimer)clearTimeout(activeOfferTimer);
+  const row=document.createElement('div');
+  row.className='pcmsg offer';
+  row.innerHTML=`<div class="pcav">BW</div><div class="pcoffer"><strong>${title}</strong><p>${text}</p><div class="pcprice">${price}</div><button class="pcunlock" onclick="purchaseProduct('${productId}')">Unlock Now</button></div>`;
+  pcfeed.appendChild(row);
+  while(pcfeed.children.length>18)pcfeed.removeChild(pcfeed.firstChild);
+  pcfeed.scrollTop=pcfeed.scrollHeight;
+  activeOfferTimer=setTimeout(()=>{row.remove();saveState()},11000);
+  offerIndex++;
+  saveState();
+}
+function pcsnd(){
+  const inp=document.getElementById('pci'),t=inp.value.trim();
+  if(!t)return;
+  pcadd(t,true);
+  inp.value='';
+  setTimeout(()=>pcadd(rand([
+    'Pro gives you the exact words, trackers, and startup steps so you are not trying to figure it out from random videos.',
+    'The best place to start is the door pitch. Once you know what to say, the whole game feels less scary.',
+    'Unlock Pro when you want the real tools: script, checklist, trackers, objections, and the next lessons after this replay.',
+    'You are not just buying training. You are getting the simple pieces that help a beginner take action cleaner and faster.'
+  ])),randInt(900,1700));
+}
+function pcky(e){if(e.key==='Enter')pcsnd()}
+
+const PRIVATE_OFFERS=[
+  ['door_pitch','Steal The Door Pitch That Gets Homeowners Talking','Get the opener, the follow-up line, the objection answers, and the simple close so you are not guessing what to say at the door.','Unlock for $7'],
+  ['startup_map','The 30-Day Roofing Startup Map','Know exactly what to set up first, where to look for jobs, what to track, and what to do daily so you can start moving with a plan.','Unlock for $27'],
+  ['leads_without_lists','Find Roofing Leads Without Buying Bad Lead Lists','A quick-hit list of places to find local roof work, subcontract opportunities, hiring companies, and homeowners already showing demand.','Unlock for $9'],
+  ['knocking_kit','Door Knocking Kit For Your First 20 Houses','Get the route plan, house tracker, opening line, follow-up message, and confidence checklist before you knock your first door.','Unlock for $17'],
+  ['tracker_pack','Estimate + Job Tracker Pack','Clean templates for customer details, job notes, estimates, follow-ups, and project tracking so every lead stays organized.','Unlock for $19'],
+  ['objection_answers','Objection Answers You Can Use On The Spot','Short, calm responses for price, trust, timing, insurance, “I need to think,” and “I’m getting other quotes.”','Unlock for $11'],
+  ['action_sprint','First 7 Days Action Sprint','A focused starter sprint that tells you what to learn, who to contact, and what to do each day so you stop watching and start building.','Unlock for $27'],
+  ['close_kit','The Beginner Roofing Close Kit','Turn a good conversation into a next step with a simple close, follow-up text, estimate reminder, and customer trust checklist.','Unlock for $17']
+];
+function schedulePrivateOffer(delay=8000){
+  setTimeout(()=>{
+    const start=offerIndex%PRIVATE_OFFERS.length;
+    const offset=randInt(0,PRIVATE_OFFERS.length-1);
+    const offer=PRIVATE_OFFERS[(start+offset)%PRIVATE_OFFERS.length];
+    pcoffer(offer[0],offer[1],offer[2],offer[3]);
+    schedulePrivateOffer(15000);
+  },delay);
+}
+schedulePrivateOffer(savedState.pcHTML?15000:8000);
+
+// Hearts
+function ht(){
+  const c=document.getElementById('hearts');
+  const likes=['👍','❤️','👍','❤️','👍','❤️','🔥'];
+  const count=randInt(2,4);
+  for(let i=0;i<count;i++){
+    setTimeout(()=>{
+      const h=document.createElement('div');
+      h.className='hf';
+      h.textContent=likes[(heartIndex+i)%likes.length];
+      h.style.marginLeft=randInt(-12,12)+'px';
+      c.appendChild(h);
+      setTimeout(()=>h.remove(),2900);
+    },i*140);
+  }
+  heartIndex=(heartIndex+count)%likes.length;
+  saveState();
+}
+setInterval(()=>{if(Math.random()>.62)ht()},6500);
+
+// Emoji picker
+const ep=document.getElementById('ep');
+EMOJIS.forEach(e=>{const b=document.createElement('div');b.className='epe';b.textContent=e;b.onclick=()=>{document.getElementById('ci').value+=e;ep.classList.remove('open');document.getElementById('ci').focus()};ep.appendChild(b)});
+function tog(ev){ev.stopPropagation();ep.classList.toggle('open')}
+document.addEventListener('click',()=>ep.classList.remove('open'));
+
+// Layout
+function setL(l){document.getElementById('main').className='l'+l;document.getElementById('b169').classList.toggle('active',l==='169');document.getElementById('b916').classList.toggle('active',l==='916')}
+
+// Toast
+function toast(msg,g){const a=document.getElementById('toasts'),t=document.createElement('div');t.className='toast'+(g?' g':'');t.innerHTML=`<span style="font-size:14px">${g?'🔓':'📣'}</span><span>${msg}</span>`;a.appendChild(t);setTimeout(()=>t.remove(),3100)}
+setInterval(()=>{if(Math.random()>.7){const n=rand(NAMES);toast(`${n} just joined Pro`,true);ht()}},11000);
+setTimeout(()=>toast('🔥 11 people just unlocked access!',true),8000);
+
+// Modals
+function openO(){goUnlock()}
+function openD(){openO()}
+function ca(){document.getElementById('ovl').classList.remove('open')}
+function ovc(e){if(e.target===document.getElementById('ovl'))ca()}
+function buy(){goUnlock()}
+function pa(el,amt){sa=amt}
+function cd(){openO()}
+</script>
+</body>
+</html>
