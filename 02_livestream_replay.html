@@ -1172,23 +1172,7 @@ body.gpu-light .sbtn:hover{
           </button>
         </div>
       </div>
-      <div id="offer">
-        <div class="ocard">
-          <div class="oey">Live Replay Offer</div>
-          <div class="ottl">Get The <em>Door Knocking<br>Script</em></div>
-          <div class="osub">Use a simple roofing door script instead of guessing what to say.</div>
-          <div class="perks">
-            <div class="perk"><span class="pi">✅</span>Door opener</div>
-            <div class="perk"><span class="pi">✅</span>First objection response</div>
-            <div class="perk"><span class="pi">✅</span>Next-step close</div>
-          </div>
-          <button class="ubtn" onclick="goUnlock()">Get Script For $17</button>
-          <div class="oftr">
-            <div class="gdot"></div>
-            <span><span id="clm">23</span> people viewing offers now</span>
-          </div>
-        </div>
-      </div>
+      <div id="offer"></div>
     </div>
   </div>
 </div>
@@ -1334,7 +1318,7 @@ let sa=null,videoMuted=typeof savedState.videoMuted==='boolean'?savedState.video
 let V_RAMPING=typeof savedState.V_RAMPING==='boolean'?savedState.V_RAMPING:true;
 let V_TARGET=Number.isFinite(savedState.V_TARGET)?savedState.V_TARGET:randInt(295,300);
 let heartIndex=Number.isFinite(savedState.heartIndex)?savedState.heartIndex:0;
-let offerIndex=Number.isFinite(savedState.offerIndex)?savedState.offerIndex:0;
+let offerIndex=0;
 let liveVideoStartMs=(isRefresh&&Number.isFinite(savedState.liveVideoStartMs))?savedState.liveVideoStartMs:Date.now();
 let activeOfferTimer=null;
 let stripe=null;
@@ -1725,8 +1709,12 @@ function scheduleViewerCount(){
 scheduleViewerCount();
 
 document.getElementById('vc').textContent=V.toLocaleString();
-document.getElementById('clm').textContent=CL;
-setInterval(()=>{if(document.hidden)return;CL=Math.max(10,Math.min(55,CL+randInt(-1,2)));document.getElementById('clm').textContent=CL;saveState()},GPU_LIGHT?9000:4200);
+function syncOfferViewCount(){
+  const count=document.getElementById('clm');
+  if(count)count.textContent=CL;
+}
+syncOfferViewCount();
+setInterval(()=>{if(document.hidden)return;CL=Math.max(10,Math.min(55,CL+randInt(-1,2)));syncOfferViewCount();saveState()},GPU_LIGHT?9000:4200);
 
 // Avatar strip
 function ip(){if(pool.length)return;for(let i=0;i<2;i++){const n=rand(NAMES);pool.push({n,c:col(n)})}}
@@ -1860,13 +1848,76 @@ function pcadd(text,me=false){
   pcfeed.scrollTop=pcfeed.scrollHeight;
   saveState();
 }
-function pcoffer(productId,title,text,price){
+const ROTATING_OFFERS=[
+  {
+    id:'door_knocking_script',
+    kind:'product',
+    productId:'door_knocking_script',
+    privateTitle:'Door Knocking Sales Script',
+    privateText:'Get the words to open the conversation, handle the first objection, and move a homeowner toward the next step at the door.',
+    price:'Unlock for $17',
+    button:'Get Script For $17',
+    replayTitle:'Get The <em>Door Knocking<br>Sales Script</em>',
+    replayText:'Use a simple roofing door script instead of guessing what to say.',
+    perks:['Door opener','First objection response','Next-step close']
+  },
+  {
+    id:'full_access_bundle',
+    kind:'redirect',
+    privateTitle:'Unlock Full Access Now',
+    privateText:'Get the Full Roofing Bundle Kit with the full roofing blueprint and the complete system.',
+    price:'Full Roofing Bundle Kit',
+    button:'Unlock Full Access',
+    replayTitle:'Unlock <em>Full Access<br>Now</em>',
+    replayText:'Get the Full Roofing Bundle Kit and the full roofing blueprint.',
+    perks:['Full roofing blueprint','Complete bundle kit','Instant access']
+  },
+  {
+    id:'roofing_leads',
+    kind:'product',
+    productId:'roofing_leads',
+    privateTitle:'How To Get Roofing Leads',
+    privateText:'Get a clear guide for finding roofing leads, spotting local demand, and building a repeatable lead flow without guessing.',
+    price:'Unlock for $27',
+    button:'Get Leads Guide For $27',
+    replayTitle:'Get <em>Roofing<br>Leads</em>',
+    replayText:'Learn how to find local roofing leads and spot real demand.',
+    perks:['Lead sources','Local demand signals','Repeatable lead flow']
+  }
+];
+function rotatingOfferById(offerId){
+  return ROTATING_OFFERS.find((offer)=>offer.id===offerId)||ROTATING_OFFERS[0];
+}
+function actOnRotatingOffer(offerId){
+  const offer=rotatingOfferById(offerId);
+  if(offer.kind==='redirect'){
+    openFullAccessBundle();
+    return;
+  }
+  purchaseProduct(offer.productId);
+}
+function renderReplayOffer(offer){
+  const perks=offer.perks.map((perk)=>`<div class="perk"><span class="pi">✅</span>${esc(perk)}</div>`).join('');
+  document.getElementById('offer').innerHTML=`<div class="ocard">
+    <div class="oey">Live Replay Offer</div>
+    <div class="ottl">${offer.replayTitle}</div>
+    <div class="osub">${esc(offer.replayText)}</div>
+    <div class="perks">${perks}</div>
+    <button class="ubtn" onclick="actOnRotatingOffer('${offer.id}')">${esc(offer.button)}</button>
+    <div class="oftr">
+      <div class="gdot"></div>
+      <span><span id="clm">${CL}</span> people viewing offers now</span>
+    </div>
+  </div>`;
+  syncOfferViewCount();
+}
+function pcoffer(offer){
   const existing=pcfeed.querySelector('.pcmsg.offer');
   if(existing)existing.remove();
   if(activeOfferTimer)clearTimeout(activeOfferTimer);
   const row=document.createElement('div');
   row.className='pcmsg offer';
-  row.innerHTML=`<div class="pcav">BW</div><div class="pcoffer"><strong>${title}</strong><p>${text}</p><div class="pcprice">${price}</div><button class="pcunlock" onclick="purchaseProduct('${productId}')">Unlock Now</button></div>`;
+  row.innerHTML=`<div class="pcav">BW</div><div class="pcoffer"><strong>${esc(offer.privateTitle)}</strong><p>${esc(offer.privateText)}</p><div class="pcprice">${esc(offer.price)}</div><button class="pcunlock" onclick="actOnRotatingOffer('${offer.id}')">${esc(offer.button)}</button></div>`;
   pcfeed.appendChild(row);
   while(pcfeed.children.length>18)pcfeed.removeChild(pcfeed.firstChild);
   pcfeed.scrollTop=pcfeed.scrollHeight;
@@ -1888,21 +1939,20 @@ function pcsnd(){
 }
 function pcky(e){if(e.key==='Enter')pcsnd()}
 
-const PRIVATE_OFFERS=[
-  ['door_knocking_script','Door Knocking Script','Get the words to open the conversation, handle the first objection, and move a homeowner toward the next step at the door.','Unlock for $17'],
-  ['roofing_leads','How To Get Roofing Leads','Get a clear guide for finding roofing leads, spotting local demand, and building a repeatable lead flow without guessing.','Unlock for $27']
-];
 function schedulePrivateOffer(delay=8000){
   setTimeout(()=>{
     if(document.hidden){
       schedulePrivateOffer(6000);
       return;
     }
-    const offer=PRIVATE_OFFERS[offerIndex%PRIVATE_OFFERS.length];
-    pcoffer(offer[0],offer[1],offer[2],offer[3]);
+    const offer=ROTATING_OFFERS[offerIndex%ROTATING_OFFERS.length];
+    const replayOffer=ROTATING_OFFERS[(offerIndex+ROTATING_OFFERS.length-1)%ROTATING_OFFERS.length];
+    renderReplayOffer(replayOffer);
+    pcoffer(offer);
     schedulePrivateOffer(35000);
   },delay);
 }
+renderReplayOffer(ROTATING_OFFERS[ROTATING_OFFERS.length-1]);
 schedulePrivateOffer(5000);
 
 // Hearts
