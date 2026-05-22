@@ -4,6 +4,8 @@
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
   <title>$100K Roofing Business Blueprint</title>
+  <link rel="preload" as="image" href="03_roofing_hero_background.webp" type="image/webp" />
+  <link rel="preload" as="image" href="03_business_mentor.webp" type="image/webp" />
   <style>
     * {
       margin: 0;
@@ -74,7 +76,7 @@
       position: absolute;
       inset: 0;
       z-index: -2;
-      background-image: url("03_roofing_hero_background.png");
+      background-image: url("03_roofing_hero_background.webp");
       background-size: cover;
       background-position: center top;
       background-repeat: no-repeat;
@@ -545,7 +547,10 @@
           <div class="gem" data-parallax="0.46"></div>
           <div class="robot">☝</div>
           <div class="pill" data-parallax="0.38"></div>
-          <img class="person" src="03_business_mentor.png" alt="Professional roofing business mentor" />
+          <picture>
+            <source srcset="03_business_mentor.webp" type="image/webp" />
+            <img class="person" src="03_business_mentor.png" alt="Professional roofing business mentor" decoding="async" fetchpriority="high" />
+          </picture>
         </div>
       </div>
     </section>
@@ -619,6 +624,7 @@
 
       let lastScrollY = window.pageYOffset || document.documentElement.scrollTop || 0;
       let resizeTimer = null;
+      let frame = 0;
 
       function readScrollY() {
         return window.pageYOffset || document.documentElement.scrollTop || 0;
@@ -633,6 +639,8 @@
       }
 
       function render() {
+        frame = 0;
+        let moving = false;
         if (!prefersReduced && !document.hidden) {
           const nextScrollY = readScrollY();
           if (nextScrollY !== lastScrollY) syncTargets();
@@ -641,16 +649,24 @@
             const ease = layer.target === 0 ? 0.32 : 0.18;
             layer.y += (layer.target - layer.y) * ease;
             if (Math.abs(layer.y - layer.target) < 0.08) layer.y = layer.target;
+            else moving = true;
             layer.el.style.setProperty('--parallax-y', `${layer.y.toFixed(2)}px`);
           });
         }
 
-        requestAnimationFrame(render);
+        if (moving) scheduleRender();
+      }
+
+      function scheduleRender() {
+        if (!frame && !prefersReduced) frame = requestAnimationFrame(render);
       }
 
       function onResize() {
         clearTimeout(resizeTimer);
-        resizeTimer = setTimeout(syncTargets, 120);
+        resizeTimer = setTimeout(() => {
+          syncTargets();
+          scheduleRender();
+        }, 120);
       }
 
       function init() {
@@ -663,10 +679,15 @@
           layer.el.style.setProperty('--parallax-y', `${layer.y.toFixed(2)}px`);
         });
 
-        window.addEventListener('scroll', syncTargets, { passive: true });
+        window.addEventListener('scroll', () => {
+          syncTargets();
+          scheduleRender();
+        }, { passive: true });
         window.addEventListener('resize', onResize, { passive: true });
-        document.addEventListener('visibilitychange', syncTargets);
-        requestAnimationFrame(render);
+        document.addEventListener('visibilitychange', () => {
+          syncTargets();
+          if (!document.hidden) scheduleRender();
+        });
       }
 
       if (document.readyState === 'loading') {
