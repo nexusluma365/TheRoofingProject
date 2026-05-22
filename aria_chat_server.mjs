@@ -179,7 +179,7 @@ const handleCreatePaymentIntent = async (req, res) => {
       customer,
       description: product.name,
       setup_future_usage: 'off_session',
-      'automatic_payment_methods[enabled]': 'true',
+      'payment_method_types[]': 'card',
       'metadata[product_id]': String(body.productId || ''),
       'metadata[product_name]': product.name
     });

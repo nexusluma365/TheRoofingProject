@@ -393,113 +393,22 @@ body.video-ready .vpbg::before{opacity:0;animation:none;transition:opacity .22s 
   margin:6px 0 18px;
 }
 .product-mockup{
-  --mw:166px;
-  --mh:212px;
+  --mw:196px;
+  --mh:248px;
   width:var(--mw);
   height:var(--mh);
   position:relative;
-  filter:drop-shadow(0 18px 20px rgba(0,0,0,.24));
-}
-.product-mockup::after{
-  content:'';
-  position:absolute;
-  left:10px;
-  right:10px;
-  bottom:-22px;
-  height:18px;
-  border-radius:50%;
-  background:radial-gradient(ellipse,rgba(0,0,0,.24),transparent 70%);
-}
-.mock-front{
-  position:absolute;
-  inset:0;
-  overflow:hidden;
-  border-radius:10px;
-  background:
-    linear-gradient(125deg,rgba(255,255,255,.20),transparent 18%,transparent 70%,rgba(0,0,0,.30)),
-    linear-gradient(180deg,rgba(100,210,255,.10),transparent 45%),
-    #102033;
-  border:1px solid rgba(205,232,255,.42);
-  box-shadow:inset 0 0 0 1px rgba(100,210,255,.08),inset 0 -40px 70px rgba(0,0,0,.28),0 0 0 1px rgba(4,9,20,.20);
-}
-.mock-front::before{
-  content:'';
-  position:absolute;
-  inset:-12px;
-  opacity:.42;
-  background:
-    linear-gradient(135deg,transparent 13%,rgba(100,210,255,.22) 14%,transparent 15%,transparent 52%,rgba(255,255,255,.12) 53%,transparent 54%),
-    repeating-linear-gradient(90deg,transparent 0 24px,rgba(57,226,205,.20) 24px 34px,transparent 34px 48px);
-  transform:translateY(74px);
-}
-.mock-badge{
-  position:absolute;
-  top:18px;
-  left:20px;
-  width:42px;
-  height:42px;
-  border-radius:50%;
   display:flex;
-  align-items:center;
   justify-content:center;
-  background:linear-gradient(135deg,#65e5da,#159cba);
-  color:#fff;
-  font-family:var(--fd);
-  font-size:21px;
-  font-weight:900;
-  box-shadow:0 8px 22px rgba(29,203,209,.30);
+  align-items:center;
+  filter:drop-shadow(0 18px 18px rgba(0,0,0,.22));
 }
-.mock-title{
-  position:absolute;
-  left:20px;
-  right:18px;
-  top:72px;
-  color:#fff;
-  font-family:var(--fd);
-  font-size:27px;
-  font-weight:900;
-  line-height:.95;
-  letter-spacing:-.45px;
-  text-transform:uppercase;
-  text-shadow:0 3px 12px rgba(0,0,0,.42);
-  overflow-wrap:normal;
-}
-.mock-pill{
-  position:absolute;
-  left:20px;
-  right:18px;
-  bottom:39px;
-  padding:8px 7px;
-  border-radius:5px;
-  background:#fff;
-  color:#159cba;
-  font-family:var(--fd);
-  font-size:10.5px;
-  font-weight:900;
-  line-height:1.05;
-  text-transform:uppercase;
-  text-align:center;
-  box-shadow:0 7px 13px rgba(0,0,0,.25);
-}
-.mock-url{
-  position:absolute;
-  left:20px;
-  right:18px;
-  bottom:14px;
-  color:rgba(255,255,255,.78);
-  font-size:9.5px;
-  font-weight:800;
-  text-align:center;
-}
+.product-image{width:100%;height:100%;object-fit:contain;display:block}
 .product-mockup.compact{
-  --mw:128px;
-  --mh:164px;
+  --mw:150px;
+  --mh:188px;
   filter:drop-shadow(0 17px 16px rgba(0,0,0,.26));
 }
-.product-mockup.compact .mock-badge{width:32px;height:32px;top:13px;left:15px;font-size:16px}
-.product-mockup.compact .mock-title{top:56px;left:15px;right:12px;font-size:20px;letter-spacing:-.3px}
-.product-mockup.compact .mock-pill{left:15px;right:12px;bottom:31px;font-size:8px;padding:5px}
-.product-mockup.compact .mock-url{left:16px;right:12px;bottom:11px;font-size:7px}
 
 /* ── TOASTS ── */
 #toasts{position:fixed;top:62px;right:14px;z-index:999;display:flex;flex-direction:column;gap:6px;pointer-events:none}
@@ -642,8 +551,8 @@ body.video-ready .vpbg::before{opacity:0;animation:none;transition:opacity .22s 
 }
 .payinfo .mockup-wrap{margin:0 0 26px}
 .payinfo .product-mockup{
-  --mw:150px;
-  --mh:192px;
+  --mw:210px;
+  --mh:264px;
 }
 .paystep{
   font-size:16px;
@@ -1295,8 +1204,8 @@ const STREAM_STATE_KEY='bwRoofingLivestreamState';
 const PAYMENT_STATE_KEY='bwRoofingStripePayment';
 const PURCHASES_KEY='bwRoofingPurchases';
 const PRODUCTS={
-  door_knocking_script:{name:'Door Knocking Script',amount:1700,display:'$17',mockTitle:'DOOR|KNOCKING',mockPill:'SCRIPT'},
-  roofing_leads:{name:'How To Get Roofing Leads',amount:2700,display:'$27',mockTitle:'ROOFING|LEADS',mockPill:'LEAD GUIDE'}
+  door_knocking_script:{name:'Door Knocking Script',amount:1700,display:'$17',image:'Sales Script Mockup.png'},
+  roofing_leads:{name:'How To Get Roofing Leads',amount:2700,display:'$27',image:'How to get roofing leads.png'}
 };
 const DEFAULT_PRODUCT_ID='door_knocking_script';
 const lead=(()=>{try{return JSON.parse(localStorage.getItem('roofingSignupLead')||'{}')}catch{return {}}})();
@@ -1408,15 +1317,8 @@ function esc(text){
 function productMockup(productId=DEFAULT_PRODUCT_ID,compact=false){
   const product=PRODUCTS[productId]||PRODUCTS[DEFAULT_PRODUCT_ID];
   const name=String(product.name||'Door Knocking Script').trim();
-  const titleHtml=esc(product.mockTitle||name).replace(/\|/g,'<br>');
-  const pillText=String(product.mockPill||product.display||'DIGITAL KIT');
   return `<div class="product-mockup${compact?' compact':''}" aria-label="${esc(name)} digital product mockup">
-    <div class="mock-front">
-      <div class="mock-badge">↗</div>
-      <div class="mock-title">${titleHtml}</div>
-      <div class="mock-pill">${esc(pillText)}</div>
-      <div class="mock-url">blackwhiteroofing.pro</div>
-    </div>
+    <img class="product-image" src="${esc(product.image)}" alt="${esc(name)} product image">
   </div>`;
 }
 
@@ -1558,7 +1460,9 @@ async function openPayment(productId=DEFAULT_PRODUCT_ID){
         }
       }
     });
-    const paymentElement=stripeElements.create('payment');
+    const paymentElement=stripeElements.create('payment',{
+      wallets:{applePay:'never',googlePay:'never'}
+    });
     paymentElement.mount('#paymentElement');
     setPayBusy(false,`Continue payment ${product.display||money(product.amount)}`);
   }catch(error){
