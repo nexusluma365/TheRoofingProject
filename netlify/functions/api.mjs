@@ -1,6 +1,7 @@
 const model = process.env.OPENAI_MODEL || 'gpt-4.1-mini';
+const defaultStripePublishableKey = 'pk_test_51REXciCySCiHdPyyts0MmZgs87FbnLYUjF91PvwD4XWyL1SE1g7pkC5cxSKmOsNucOmLp6pB2yPSRhHFixA1p15Y00xqtwpkEL';
 const stripeSecretKey = process.env.STRIPE_SECRET_KEY || '';
-const stripePublishableKey = process.env.STRIPE_PUBLISHABLE_KEY || '';
+const stripePublishableKey = process.env.STRIPE_PUBLISHABLE_KEY || defaultStripePublishableKey;
 const cloudflareDownloadBaseUrl = (process.env.CLOUDFLARE_DOWNLOAD_BASE_URL || '').replace(/\/+$/, '');
 
 const jsonHeaders = {
