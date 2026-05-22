@@ -832,7 +832,26 @@ body.video-ready .vpbg::before{opacity:0;animation:none;transition:opacity .22s 
     border:0;
   }
   .vptop{padding:12px 13px}
-  #timer{font-size:30px}
+  .iplabel{
+    display:inline-flex;
+    align-items:center;
+    margin:0;
+    padding:5px 9px;
+    border:1px solid rgba(100,210,255,.38);
+    border-radius:999px;
+    background:rgba(10,132,255,.18);
+    color:#bfe8ff;
+    font-size:0;
+    letter-spacing:0;
+  }
+  .iplabel::before{
+    content:'Live Replay';
+    font-size:9px;
+    font-weight:800;
+    letter-spacing:1.4px;
+    text-transform:uppercase;
+  }
+  #timer{display:none}
   .vstrip{bottom:13px}
   #sb{
     position:absolute;
@@ -858,10 +877,11 @@ body.video-ready .vpbg::before{opacity:0;animation:none;transition:opacity .22s 
   .msg{
     max-width:min(84vw,330px);
     padding:5px 7px;
-    background:rgba(2,5,10,.3);
+    background:none !important;
+    box-shadow:none;
     text-shadow:0 1px 8px rgba(0,0,0,.85);
   }
-  .msg:hover{background:rgba(2,5,10,.42)}
+  .msg:hover{background:none !important}
   .njoin,.ndon{
     background:rgba(2,5,10,.42);
     border-color:rgba(255,255,255,.12);
@@ -895,12 +915,13 @@ body.video-ready .vpbg::before{opacity:0;animation:none;transition:opacity .22s 
   #pc .pchead,#pc .pcfeed,#pc .pcbar{display:none}
   #offer{
     position:fixed;
-    top:116px;
-    left:12px;
+    top:50%;
+    left:50%;
     right:auto;
-    width:min(230px,calc(100vw - 20px));
+    width:min(250px,calc(100vw - 28px));
     margin:0;
     pointer-events:auto;
+    transform:translate(-50%,-50%);
   }
   .ocard{
     border-radius:18px;
@@ -951,22 +972,58 @@ body.video-ready .vpbg::before{opacity:0;animation:none;transition:opacity .22s 
     right:10px;
   }
   .toast{max-width:none}
-  #payOvl{padding:14px}
-  #payModal{width:min(100%,520px);border-radius:16px}
-  .paygrid{grid-template-columns:1fr;gap:22px;padding:30px 18px 24px}
+  #payOvl{
+    align-items:center;
+    padding:12px;
+  }
+  #payModal{
+    width:min(100%,430px);
+    max-height:calc(100dvh - 24px);
+    border-radius:16px;
+    overflow-y:auto;
+  }
+  .paygrid{
+    grid-template-columns:1fr;
+    gap:12px;
+    padding:18px 14px 16px;
+  }
   #payModal .mx{top:14px;right:14px}
-  .payleft h2{font-size:30px}
-  .paysub{font-size:18px;margin-bottom:18px}
-  .payinfo{min-height:auto;padding:22px 18px}
-  .payinfo .product-mockup{--mw:126px;--mh:160px}
-  .paystep{font-size:14px;margin-bottom:18px}
-  .paycards{grid-template-columns:repeat(2,1fr);margin-bottom:20px}
-  .payprivacy{max-width:none;margin-bottom:24px;font-size:14px;text-align:left}
+  .payleft h2,.paysub,.paystep,.paycards,.payprivacy,.paysupport{display:none}
+  .payinfo{
+    min-height:0;
+    padding:8px 40px 4px 0;
+    background:none;
+    box-shadow:none;
+  }
+  .payinfo .mockup-wrap{margin:0}
+  .payinfo .product-mockup{
+    --mw:88px;
+    --mh:112px;
+    margin-right:auto;
+  }
   .payright{padding-top:0}
-  .payline{align-items:flex-start}
-  .payname{font-size:16px}
-  .payamt{font-size:18px}
-  .paycta{width:100%;min-width:0}
+  .payline{
+    align-items:center;
+    margin-bottom:12px;
+    padding:10px 11px;
+    border:1px solid rgba(49,95,220,.12);
+    border-radius:12px;
+    background:rgba(255,255,255,.58);
+  }
+  .payname{font-size:15px}
+  .payamt{
+    padding:7px 10px;
+    font-size:17px;
+  }
+  #paymentElement{margin-bottom:12px}
+  .paycta{
+    width:100%;
+    min-width:0;
+    margin-top:2px;
+    padding:14px 16px;
+  }
+  .payback,.paybundle,.paynotice{display:none}
+  .payerr{margin-top:9px}
   .paycomplete{max-width:none}
 }
 
@@ -1898,7 +1955,7 @@ function lc(){
 setTimeout(lc,3500);
 
 function showUnlockPopup(){document.getElementById('ovl').classList.add('open')}
-function snd(){const inp=document.getElementById('ci'),t=inp.value.trim().slice(0,25);if(!t)return;ac('m',{n:'You',c:'var(--accent)',loc:'',text:t,me:true});inp.value='';saveState();showUnlockPopup()}
+function snd(){const inp=document.getElementById('ci'),t=inp.value.trim().slice(0,25);if(!t)return;ac('m',{n:'You',c:'var(--accent)',loc:'',text:t,me:true});inp.value='';saveState();window.location.href=PRO_UNLOCK_URL}
 function ky(e){if(e.key==='Enter')snd()}
 
 // Private chat
