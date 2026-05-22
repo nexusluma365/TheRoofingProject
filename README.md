@@ -29,29 +29,15 @@ CLOUDFLARE_DOWNLOAD_BASE_URL
 You can also set per-product Cloudflare URLs:
 
 ```text
-DOWNLOAD_URL_FULL_ACCESS
-DOWNLOAD_URL_DOOR_PITCH
-DOWNLOAD_URL_STARTUP_MAP
-DOWNLOAD_URL_LEADS_WITHOUT_LISTS
-DOWNLOAD_URL_KNOCKING_KIT
-DOWNLOAD_URL_TRACKER_PACK
-DOWNLOAD_URL_OBJECTION_ANSWERS
-DOWNLOAD_URL_ACTION_SPRINT
-DOWNLOAD_URL_CLOSE_KIT
+DOWNLOAD_URL_DOOR_KNOCKING_SCRIPT
+DOWNLOAD_URL_ROOFING_LEADS
 ```
 
 If using `CLOUDFLARE_DOWNLOAD_BASE_URL`, upload files with these names:
 
 ```text
-roofing-pro-full-access.zip
-door-pitch-script-kit.pdf
-30-day-roofing-startup-map.pdf
-roofing-leads-without-lists.pdf
-door-knocking-20-house-kit.pdf
-estimate-job-tracker-pack.zip
-objection-answer-kit.pdf
-first-7-days-action-sprint.pdf
-beginner-roofing-close-kit.pdf
+door-knocking-script.pdf
+how-to-get-roofing-leads.pdf
 ```
 
 ## Local Development

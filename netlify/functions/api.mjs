@@ -9,59 +9,17 @@ const jsonHeaders = {
 };
 
 const stripeProducts = {
-  full_access: {
-    name: 'Roofing Pro Full Access',
-    amount: 29700,
-    currency: 'usd',
-    downloadFile: 'roofing-pro-full-access.zip'
-  },
-  door_pitch: {
-    name: 'Steal The Door Pitch That Gets Homeowners Talking',
-    amount: 700,
-    currency: 'usd',
-    downloadFile: 'door-pitch-script-kit.pdf'
-  },
-  startup_map: {
-    name: 'The 30-Day Roofing Startup Map',
-    amount: 2700,
-    currency: 'usd',
-    downloadFile: '30-day-roofing-startup-map.pdf'
-  },
-  leads_without_lists: {
-    name: 'Find Roofing Leads Without Buying Bad Lead Lists',
-    amount: 900,
-    currency: 'usd',
-    downloadFile: 'roofing-leads-without-lists.pdf'
-  },
-  knocking_kit: {
-    name: 'Door Knocking Kit For Your First 20 Houses',
+  door_knocking_script: {
+    name: 'Door Knocking Script',
     amount: 1700,
     currency: 'usd',
-    downloadFile: 'door-knocking-20-house-kit.pdf'
+    downloadFile: 'door-knocking-script.pdf'
   },
-  tracker_pack: {
-    name: 'Estimate + Job Tracker Pack',
-    amount: 1900,
-    currency: 'usd',
-    downloadFile: 'estimate-job-tracker-pack.zip'
-  },
-  objection_answers: {
-    name: 'Objection Answers You Can Use On The Spot',
-    amount: 1100,
-    currency: 'usd',
-    downloadFile: 'objection-answer-kit.pdf'
-  },
-  action_sprint: {
-    name: 'First 7 Days Action Sprint',
+  roofing_leads: {
+    name: 'How To Get Roofing Leads',
     amount: 2700,
     currency: 'usd',
-    downloadFile: 'first-7-days-action-sprint.pdf'
-  },
-  close_kit: {
-    name: 'The Beginner Roofing Close Kit',
-    amount: 1700,
-    currency: 'usd',
-    downloadFile: 'beginner-roofing-close-kit.pdf'
+    downloadFile: 'how-to-get-roofing-leads.pdf'
   }
 };
 

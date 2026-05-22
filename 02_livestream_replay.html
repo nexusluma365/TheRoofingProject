@@ -560,6 +560,32 @@ body.video-ready .vpbg::before{opacity:0;animation:none;transition:opacity .22s 
   box-shadow:0 4px 18px rgba(10,132,255,.35),inset 0 1px 0 rgba(255,255,255,.12);
 }
 .mocta:hover{transform:translateY(-1px);box-shadow:0 8px 28px rgba(10,132,255,.45)}
+.mobundle{
+  margin-top:12px;
+  padding:12px;
+  border:1px solid rgba(100,210,255,.22);
+  border-radius:var(--r12);
+  background:rgba(10,132,255,.10);
+}
+.mobundle strong{
+  display:block;
+  margin-bottom:4px;
+  color:var(--t1);
+  font-family:var(--fd);
+  font-size:13px;
+  line-height:1.2;
+}
+.mobundle p{
+  margin-bottom:10px;
+  color:var(--t2);
+  font-size:11.5px;
+  line-height:1.4;
+}
+.mobundle .mocta{
+  background:rgba(255,255,255,.09);
+  border:1px solid rgba(255,255,255,.12);
+  box-shadow:none;
+}
 .mogu{display:flex;align-items:center;justify-content:center;gap:4px;margin-top:9px;font-size:11px;color:var(--t3)}
 
 #payOvl{
@@ -1070,7 +1096,7 @@ body.gpu-light .sbtn:hover{
         </div>
         <button class="supbtn" onclick="openO()">
           <svg width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><rect x="3" y="11" width="18" height="11" rx="2" ry="2"/><path d="M7 11V7a5 5 0 0 1 10 0v4"/></svg>
-          Unlock Full Access!
+          Get Door Script
         </button>
       </div>
 
@@ -1096,12 +1122,12 @@ body.gpu-light .sbtn:hover{
       <div class="pchead">
         <div class="pctag">Private Chat</div>
         <div class="pctitle">Black & White Roofing Assistant</div>
-        <div class="pcsub">Ask about Pro, the sales script, or what you need to start.</div>
+        <div class="pcsub">Ask about the script, roofing leads, or what you need to start.</div>
       </div>
       <div class="pcfeed" id="pcfeed">
         <div class="pcmsg">
           <div class="pcav">BW</div>
-          <div class="pcb">Watch the training first. When the door pitch clicks, Pro unlocks the exact scripts, trackers, and startup steps so you can stop guessing and start moving.</div>
+          <div class="pcb">Watch the training first. When the door pitch clicks, grab the Door Knocking Script or the roofing leads guide so you can take the next step with a plan.</div>
         </div>
       </div>
       <div class="pcbar">
@@ -1114,19 +1140,18 @@ body.gpu-light .sbtn:hover{
       </div>
       <div id="offer">
         <div class="ocard">
-          <div class="oey">🔥 Joined Pro — Live Replay</div>
-          <div class="ottl">Unlock Pro To Get The <em>Roofing<br>Starter Kit</em></div>
-          <div class="osub">Get the tools you need to start: sales script, job tracker, templates, and more.</div>
+          <div class="oey">Live Replay Offer</div>
+          <div class="ottl">Get The <em>Door Knocking<br>Script</em></div>
+          <div class="osub">Use a simple roofing door script instead of guessing what to say.</div>
           <div class="perks">
-            <div class="perk"><span class="pi">✅</span>Working roofing sales script</div>
-            <div class="perk"><span class="pi">✅</span>Things you need to start a roofing business</div>
-            <div class="perk"><span class="pi">✅</span>Job tracker, templates, and checklists</div>
-            <div class="perk"><span class="pi">✅</span>More training after this free lesson</div>
+            <div class="perk"><span class="pi">✅</span>Door opener</div>
+            <div class="perk"><span class="pi">✅</span>First objection response</div>
+            <div class="perk"><span class="pi">✅</span>Next-step close</div>
           </div>
-          <button class="ubtn" onclick="goUnlock()">Unlock Full Access!</button>
+          <button class="ubtn" onclick="goUnlock()">Get Script For $17</button>
           <div class="oftr">
             <div class="gdot"></div>
-            <span><span id="clm">23</span> people joined Pro right now</span>
+            <span><span id="clm">23</span> people viewing offers now</span>
           </div>
         </div>
       </div>
@@ -1139,17 +1164,20 @@ body.gpu-light .sbtn:hover{
 <div id="ovl" onclick="ovc(event)">
   <div class="modal" id="mO">
     <button class="mx" onclick="ca()">✕</button>
-    <h2>Unlock Full Access</h2>
-    <p class="mosub">Send chat is part of Pro. Unlock the tools built to help you start moving in roofing.</p>
+    <h2>Get Door Knocking Script</h2>
+    <p class="mosub">Use a simple door script built for your first roofing conversations.</p>
     <div class="moperks">
-      <div class="mop"><div class="moi">📋</div><div><div class="mol">Roofing Sales Scripts</div><div class="mos">What to say at the door, on calls, and in follow-up</div></div></div>
-      <div class="mop"><div class="moi">🏠</div><div><div class="mol">Business Startup Checklist</div><div class="mos">The basics you need before taking roofing jobs</div></div></div>
-      <div class="mop"><div class="moi">🧰</div><div><div class="mol">Templates & Trackers</div><div class="mos">Track leads, jobs, estimates, and follow-ups</div></div></div>
-      <div class="mop"><div class="moi">🎥</div><div><div class="mol">More Pro Training</div><div class="mos">Next lessons after the live stream</div></div></div>
+      <div class="mop"><div class="moi">📋</div><div><div class="mol">Door Opener</div><div class="mos">Know how to start the conversation clearly</div></div></div>
+      <div class="mop"><div class="moi">🏠</div><div><div class="mol">Roofing Angle</div><div class="mos">Keep the pitch focused on homeowner needs</div></div></div>
+      <div class="mop"><div class="moi">↗</div><div><div class="mol">Next Step</div><div class="mos">Move the conversation toward an appointment</div></div></div>
     </div>
-    <div class="moprice"><span class="moorig">$997</span><span class="moamt">$297</span><span class="moper">today only</span></div>
-    <button class="mocta" onclick="goUnlock()">Unlock Full Access!</button>
-    <div class="mogu">🛡️ 30-day money-back guarantee · No questions asked</div>
+    <div class="moprice"><span class="moamt">$17</span><span class="moper">one-time</span></div>
+    <button class="mocta" onclick="goUnlock()">Get Script</button>
+    <div class="mobundle">
+      <strong>Unlock Full Access Now</strong>
+      <p>Get the Full Roofing Bundle Kit with the full blueprint.</p>
+      <button class="mocta" onclick="openFullAccessBundle()">Get Full Roofing Bundle Kit</button>
+    </div>
   </div>
 </div>
 
@@ -1176,7 +1204,7 @@ body.gpu-light .sbtn:hover{
       </div>
       <div class="payright">
         <div class="payline">
-          <div class="payname" id="payProductName">Roofing Pro Full Access</div>
+          <div class="payname" id="payProductName">Door Knocking Script</div>
           <div class="payamt" id="payProductAmount">$297</div>
         </div>
         <p class="paycopy">Enter your card once. Stripe securely saves it so future offer clicks can be charged instantly for that selected product.</p>
@@ -1244,16 +1272,10 @@ const STREAM_STATE_KEY='bwRoofingLivestreamState';
 const PAYMENT_STATE_KEY='bwRoofingStripePayment';
 const PURCHASES_KEY='bwRoofingPurchases';
 const PRODUCTS={
-  full_access:{name:'Roofing Pro Full Access',amount:29700,display:'$297',mockTitle:'ROOFING|PRO',mockPill:'FULL ACCESS'},
-  door_pitch:{name:'Steal The Door Pitch That Gets Homeowners Talking',amount:700,display:'$7',mockTitle:'DOOR|PITCH',mockPill:'SCRIPT KIT'},
-  startup_map:{name:'The 30-Day Roofing Startup Map',amount:2700,display:'$27',mockTitle:'30-DAY|ROOFING',mockPill:'STARTUP MAP'},
-  leads_without_lists:{name:'Find Roofing Leads Without Buying Bad Lead Lists',amount:900,display:'$9',mockTitle:'ROOFING|LEADS',mockPill:'NO LISTS'},
-  knocking_kit:{name:'Door Knocking Kit For Your First 20 Houses',amount:1700,display:'$17',mockTitle:'DOOR|KNOCKING',mockPill:'20 HOUSE KIT'},
-  tracker_pack:{name:'Estimate + Job Tracker Pack',amount:1900,display:'$19',mockTitle:'JOB|TRACKER',mockPill:'ESTIMATE PACK'},
-  objection_answers:{name:'Objection Answers You Can Use On The Spot',amount:1100,display:'$11',mockTitle:'OBJECTION|ANSWERS',mockPill:'RESPONSE KIT'},
-  action_sprint:{name:'First 7 Days Action Sprint',amount:2700,display:'$27',mockTitle:'7-DAY|SPRINT',mockPill:'ACTION PLAN'},
-  close_kit:{name:'The Beginner Roofing Close Kit',amount:1700,display:'$17',mockTitle:'ROOFING|CLOSE',mockPill:'BEGINNER KIT'}
+  door_knocking_script:{name:'Door Knocking Script',amount:1700,display:'$17',mockTitle:'DOOR|KNOCKING',mockPill:'SCRIPT'},
+  roofing_leads:{name:'How To Get Roofing Leads',amount:2700,display:'$27',mockTitle:'ROOFING|LEADS',mockPill:'LEAD GUIDE'}
 };
+const DEFAULT_PRODUCT_ID='door_knocking_script';
 const lead=(()=>{try{return JSON.parse(localStorage.getItem('roofingSignupLead')||'{}')}catch{return {}}})();
 const leadName=(lead.name||'').trim();
 const leadFirstName=leadName.split(/\s+/)[0]||'there';
@@ -1278,7 +1300,7 @@ let liveVideoStartMs=(isRefresh&&Number.isFinite(savedState.liveVideoStartMs))?s
 let activeOfferTimer=null;
 let stripe=null;
 let stripeElements=null;
-let activePaymentProductId='full_access';
+let activePaymentProductId=DEFAULT_PRODUCT_ID;
 let activePaymentClientSecret='';
 let payBusy=false;
 const lessonVideo=document.getElementById('lessonVideo');
@@ -1360,9 +1382,9 @@ function esc(text){
     "'":'&#39;'
   })[char]);
 }
-function productMockup(productId='full_access',compact=false){
-  const product=PRODUCTS[productId]||PRODUCTS.full_access;
-  const name=String(product.name||'Roofing Pro Full Access').trim();
+function productMockup(productId=DEFAULT_PRODUCT_ID,compact=false){
+  const product=PRODUCTS[productId]||PRODUCTS[DEFAULT_PRODUCT_ID];
+  const name=String(product.name||'Door Knocking Script').trim();
   const titleHtml=esc(product.mockTitle||name).replace(/\|/g,'<br>');
   const pillText=String(product.mockPill||product.display||'DIGITAL KIT');
   return `<div class="product-mockup${compact?' compact':''}" aria-label="${esc(name)} digital product mockup">
@@ -1432,7 +1454,7 @@ async function fetchConfirmedPurchase(productId,paymentIntentId){
   return data;
 }
 function showPurchaseDownload(productId,details={}){
-  const product=PRODUCTS[productId]||PRODUCTS.full_access;
+  const product=PRODUCTS[productId]||PRODUCTS[DEFAULT_PRODUCT_ID];
   const downloadUrl=details.downloadUrl||details.product?.downloadUrl||product.downloadUrl||'';
   const download=document.getElementById('payDownload');
   document.getElementById('payProductName').textContent=product.name;
@@ -1454,15 +1476,15 @@ function showPurchaseDownload(productId,details={}){
 }
 function completePurchase(productId,details={}){
   savePurchase(productId,details);
-  const product=PRODUCTS[productId]||PRODUCTS.full_access;
+  const product=PRODUCTS[productId]||PRODUCTS[DEFAULT_PRODUCT_ID];
   ca();
   showPurchaseDownload(productId,details);
   toast(`Unlocked ${product.name}`,true);
   pcadd(`Unlocked: ${product.name}. Check your saved purchases for access.`,false);
 }
-async function openPayment(productId='full_access'){
+async function openPayment(productId=DEFAULT_PRODUCT_ID){
   activePaymentProductId=productId;
-  const product=PRODUCTS[productId]||PRODUCTS.full_access;
+  const product=PRODUCTS[productId]||PRODUCTS[DEFAULT_PRODUCT_ID];
   document.getElementById('payProductName').textContent=product.name;
   document.getElementById('payProductAmount').textContent=product.display||money(product.amount);
   document.getElementById('payProductMockup').innerHTML=productMockup(productId);
@@ -1530,7 +1552,7 @@ async function submitCardPayment(){
     redirect:'if_required'
   });
   if(error){
-    setPayBusy(false,`Continue payment ${(PRODUCTS[activePaymentProductId]||PRODUCTS.full_access).display}`);
+    setPayBusy(false,`Continue payment ${(PRODUCTS[activePaymentProductId]||PRODUCTS[DEFAULT_PRODUCT_ID]).display}`);
     setPayMessage(error.message||'Payment failed.');
     return;
   }
@@ -1562,9 +1584,9 @@ function closePayment(){
   setPayMessage('');
 }
 function payOvc(e){if(e.target===document.getElementById('payOvl'))closePayment()}
-async function purchaseProduct(productId='full_access'){
+async function purchaseProduct(productId=DEFAULT_PRODUCT_ID){
   const saved=getSavedPayment();
-  const product=PRODUCTS[productId]||PRODUCTS.full_access;
+  const product=PRODUCTS[productId]||PRODUCTS[DEFAULT_PRODUCT_ID];
   ca();
   if(saved.customerId&&saved.paymentMethodId){
     setPayMessage('');
@@ -1592,7 +1614,7 @@ async function purchaseProduct(productId='full_access'){
   }
   await openPayment(productId);
 }
-function goUnlock(productId='full_access'){
+function goUnlock(productId=DEFAULT_PRODUCT_ID){
   purchaseProduct(productId);
 }
 function openBlueprintAfterPayment(){
@@ -1603,6 +1625,9 @@ function openBlueprintAfterPayment(){
   }
   document.body.style.pointerEvents='none';
   setTimeout(()=>{window.location.href=PRO_UNLOCK_URL},650);
+}
+function openFullAccessBundle(){
+  window.location.href=PRO_UNLOCK_URL;
 }
 let saveTimer=0;
 let lastSaveAt=0;
@@ -1783,7 +1808,7 @@ if(savedState.pcHTML){
 }else{
   pcfeed.innerHTML=`<div class="pcmsg">
     <div class="pcav">BW</div>
-    <div class="pcb">Hey ${leadFirstName}, glad you made it in${leadEmail?` from ${leadEmail}`:''}. Watch the training first. When the door pitch clicks, Pro unlocks the exact scripts, trackers, and startup steps so you can stop guessing and start moving.</div>
+    <div class="pcb">Hey ${leadFirstName}, glad you made it in${leadEmail?` from ${leadEmail}`:''}. Watch the training first. When the door pitch clicks, choose the Door Knocking Script or the roofing leads guide to keep moving.</div>
   </div>`;
 }
 pcfeed.scrollTop=pcfeed.scrollHeight;
@@ -1806,7 +1831,7 @@ function pcoffer(productId,title,text,price){
   pcfeed.appendChild(row);
   while(pcfeed.children.length>18)pcfeed.removeChild(pcfeed.firstChild);
   pcfeed.scrollTop=pcfeed.scrollHeight;
-  activeOfferTimer=setTimeout(()=>{row.remove();saveState()},11000);
+  activeOfferTimer=setTimeout(()=>{row.remove();saveState()},30000);
   offerIndex++;
   saveState();
 }
@@ -1816,23 +1841,17 @@ function pcsnd(){
   pcadd(t,true);
   inp.value='';
   setTimeout(()=>pcadd(rand([
-    'Pro gives you the exact words, trackers, and startup steps so you are not trying to figure it out from random videos.',
+    'The Door Knocking Script gives you words to start with so you are not trying to figure it out from random videos.',
     'The best place to start is the door pitch. Once you know what to say, the whole game feels less scary.',
-    'Unlock Pro when you want the real tools: script, checklist, trackers, objections, and the next lessons after this replay.',
-    'You are not just buying training. You are getting the simple pieces that help a beginner take action cleaner and faster.'
+    'The roofing leads guide helps you see where demand is and how to start finding people to talk to.',
+    'These two guides are built for action: what to say at the door and where to find roofing leads.'
   ])),randInt(900,1700));
 }
 function pcky(e){if(e.key==='Enter')pcsnd()}
 
 const PRIVATE_OFFERS=[
-  ['door_pitch','Steal The Door Pitch That Gets Homeowners Talking','Get the opener, the follow-up line, the objection answers, and the simple close so you are not guessing what to say at the door.','Unlock for $7'],
-  ['startup_map','The 30-Day Roofing Startup Map','Know exactly what to set up first, where to look for jobs, what to track, and what to do daily so you can start moving with a plan.','Unlock for $27'],
-  ['leads_without_lists','Find Roofing Leads Without Buying Bad Lead Lists','A quick-hit list of places to find local roof work, subcontract opportunities, hiring companies, and homeowners already showing demand.','Unlock for $9'],
-  ['knocking_kit','Door Knocking Kit For Your First 20 Houses','Get the route plan, house tracker, opening line, follow-up message, and confidence checklist before you knock your first door.','Unlock for $17'],
-  ['tracker_pack','Estimate + Job Tracker Pack','Clean templates for customer details, job notes, estimates, follow-ups, and project tracking so every lead stays organized.','Unlock for $19'],
-  ['objection_answers','Objection Answers You Can Use On The Spot','Short, calm responses for price, trust, timing, insurance, “I need to think,” and “I’m getting other quotes.”','Unlock for $11'],
-  ['action_sprint','First 7 Days Action Sprint','A focused starter sprint that tells you what to learn, who to contact, and what to do each day so you stop watching and start building.','Unlock for $27'],
-  ['close_kit','The Beginner Roofing Close Kit','Turn a good conversation into a next step with a simple close, follow-up text, estimate reminder, and customer trust checklist.','Unlock for $17']
+  ['door_knocking_script','Door Knocking Script','Get the words to open the conversation, handle the first objection, and move a homeowner toward the next step at the door.','Unlock for $17'],
+  ['roofing_leads','How To Get Roofing Leads','Get a clear guide for finding roofing leads, spotting local demand, and building a repeatable lead flow without guessing.','Unlock for $27']
 ];
 function schedulePrivateOffer(delay=8000){
   setTimeout(()=>{
@@ -1840,14 +1859,12 @@ function schedulePrivateOffer(delay=8000){
       schedulePrivateOffer(6000);
       return;
     }
-    const start=offerIndex%PRIVATE_OFFERS.length;
-    const offset=randInt(0,PRIVATE_OFFERS.length-1);
-    const offer=PRIVATE_OFFERS[(start+offset)%PRIVATE_OFFERS.length];
+    const offer=PRIVATE_OFFERS[offerIndex%PRIVATE_OFFERS.length];
     pcoffer(offer[0],offer[1],offer[2],offer[3]);
-    schedulePrivateOffer(GPU_LIGHT?24000:15000);
+    schedulePrivateOffer(35000);
   },delay);
 }
-schedulePrivateOffer(savedState.pcHTML?(GPU_LIGHT?24000:15000):(GPU_LIGHT?12000:8000));
+schedulePrivateOffer(5000);
 
 // Hearts
 function ht(){
