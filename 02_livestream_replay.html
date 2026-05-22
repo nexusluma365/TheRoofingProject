@@ -750,6 +750,40 @@ body.video-ready .vpbg::before{opacity:0;animation:none;transition:opacity .22s 
   cursor:pointer;
 }
 .payback:hover{color:#315fdc}
+.paybundle{
+  max-width:410px;
+  margin-top:16px;
+  padding:14px;
+  border:1px solid rgba(49,95,220,.18);
+  border-radius:12px;
+  background:linear-gradient(180deg,rgba(49,95,220,.10),rgba(255,255,255,.48));
+}
+.paybundle strong{
+  display:block;
+  margin-bottom:5px;
+  color:#151a2d;
+  font-family:var(--fd);
+  font-size:15px;
+  font-weight:900;
+}
+.paybundle p{
+  margin-bottom:11px;
+  color:#52627d;
+  font-size:12px;
+  line-height:1.4;
+}
+.paybundle button{
+  width:100%;
+  min-height:44px;
+  border:1px solid rgba(49,95,220,.18);
+  border-radius:10px;
+  background:#fff;
+  color:#315fdc;
+  cursor:pointer;
+  font-family:var(--fd);
+  font-size:13px;
+  font-weight:900;
+}
 .paynotice{
   display:flex;
   gap:8px;
@@ -1205,12 +1239,17 @@ body.gpu-light .sbtn:hover{
       <div class="payright">
         <div class="payline">
           <div class="payname" id="payProductName">Door Knocking Script</div>
-          <div class="payamt" id="payProductAmount">$297</div>
+          <div class="payamt" id="payProductAmount">$17</div>
         </div>
         <p class="paycopy">Enter your card once. Stripe securely saves it so future offer clicks can be charged instantly for that selected product.</p>
         <div id="paymentElement"></div>
         <button class="mocta paycta" id="paySubmit" onclick="submitCardPayment()">Continue payment</button>
         <button class="payback" type="button" onclick="closePayment()">← Go back</button>
+        <div class="paybundle">
+          <strong>Unlock Full Access Now</strong>
+          <p>Get the Full Roofing Bundle Kit with the full blueprint.</p>
+          <button type="button" onclick="openFullAccessBundle()">Get Full Roofing Bundle Kit</button>
+        </div>
         <div class="paynotice"><span>🔒</span><span>By paying, you authorize future in-app purchases you click to be charged to this saved card. Your card details are handled by Stripe and are not stored in this app.</span></div>
         <div class="payerr" id="payMessage" aria-live="polite"></div>
         <div class="paycomplete" id="payComplete">
