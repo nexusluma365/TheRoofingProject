@@ -475,6 +475,14 @@ body.video-ready .vpbg::before{opacity:0;animation:none;transition:opacity .22s 
   box-shadow:0 4px 18px rgba(10,132,255,.35),inset 0 1px 0 rgba(255,255,255,.12);
 }
 .mocta:hover{transform:translateY(-1px);box-shadow:0 8px 28px rgba(10,132,255,.45)}
+.mocta.pill{
+  width:auto;
+  min-width:220px;
+  display:block;
+  margin:0 auto;
+  border-radius:999px;
+  padding:14px 24px;
+}
 .mobundle{
   margin-top:12px;
   padding:12px;
@@ -1321,20 +1329,9 @@ body.gpu-light .sbtn:hover{
 <div id="ovl" onclick="ovc(event)">
   <div class="modal" id="mO">
     <button class="mx" onclick="ca()">✕</button>
-    <h2>Get Door Knocking Script</h2>
-    <p class="mosub">Use a simple door script built for your first roofing conversations.</p>
-    <div class="moperks">
-      <div class="mop"><div class="moi">📋</div><div><div class="mol">Door Opener</div><div class="mos">Know how to start the conversation clearly</div></div></div>
-      <div class="mop"><div class="moi">🏠</div><div><div class="mol">Roofing Angle</div><div class="mos">Keep the pitch focused on homeowner needs</div></div></div>
-      <div class="mop"><div class="moi">↗</div><div><div class="mol">Next Step</div><div class="mos">Move the conversation toward an appointment</div></div></div>
-    </div>
-    <div class="moprice"><span class="moamt">$17</span><span class="moper">one-time</span></div>
-    <button class="mocta" onclick="goUnlock()">Get Script</button>
-    <div class="mobundle">
-      <strong>Unlock Full Access Now</strong>
-      <p>Get the Full Roofing Bundle Kit with the full blueprint.</p>
-      <button class="mocta" onclick="openFullAccessBundle()">Get Full Roofing Bundle Kit</button>
-    </div>
+    <h2>To Chat with Users Unlock Full Access</h2>
+    <p class="mosub">Unlock the Full Roofing Bundle Kit to continue with full access.</p>
+    <button class="mocta pill" onclick="openFullAccessBundle()">Unlock Full Access</button>
   </div>
 </div>
 
@@ -2057,7 +2054,7 @@ function lc(){
 setTimeout(lc,3500);
 
 function showUnlockPopup(){document.getElementById('ovl').classList.add('open')}
-function snd(){const inp=document.getElementById('ci'),t=inp.value.trim().slice(0,25);if(!t)return;ac('m',{n:'You',c:'var(--accent)',loc:'',text:t,me:true});inp.value='';saveState();window.location.href=PRO_UNLOCK_URL}
+function snd(){const inp=document.getElementById('ci'),t=inp.value.trim().slice(0,25);if(!t)return;ac('m',{n:'You',c:'var(--accent)',loc:'',text:t,me:true});inp.value='';saveState();showUnlockPopup()}
 function ky(e){if(e.key==='Enter')snd()}
 
 // Private chat
