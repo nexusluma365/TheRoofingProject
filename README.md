@@ -28,7 +28,7 @@ R2_FILE_KEY
 R2_FILE_KEY2
 ```
 
-The livestream currently includes the Stripe test publishable key in its server-side config response. Set `STRIPE_SECRET_KEY` in Netlify with the matching Stripe test secret key before testing payments. Add `STRIPE_PUBLISHABLE_KEY` later if you need to override the bundled client key, such as when switching to live Stripe keys.
+The livestream currently includes the Stripe live publishable key in its server-side config response. Set `STRIPE_SECRET_KEY` in Netlify with the matching live Stripe secret key before accepting payments. Add `STRIPE_PUBLISHABLE_KEY` if you need to override the bundled client key.
 
 ## Google Sheets Lead Capture
 
