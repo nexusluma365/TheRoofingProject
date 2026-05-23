@@ -2054,7 +2054,7 @@ function lc(){
 setTimeout(lc,3500);
 
 function showUnlockPopup(){document.getElementById('ovl').classList.add('open')}
-function snd(){const inp=document.getElementById('ci'),t=inp.value.trim().slice(0,25);if(!t)return;ac('m',{n:'You',c:'var(--accent)',loc:'',text:t,me:true});inp.value='';saveState();showUnlockPopup()}
+function snd(){const inp=document.getElementById('ci'),t=inp.value.trim().slice(0,25);if(!t)return;inp.value='';showUnlockPopup()}
 function ky(e){if(e.key==='Enter')snd()}
 
 // Private chat
