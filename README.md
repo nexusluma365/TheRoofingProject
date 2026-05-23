@@ -23,6 +23,8 @@ OPENAI_API_KEY
 OPENAI_MODEL
 STRIPE_SECRET_KEY
 CLOUDFLARE_DOWNLOAD_BASE_URL
+R2_FILE_KEY
+R2_FILE_KEY2
 ```
 
 The livestream currently includes the Stripe test publishable key in its server-side config response. Set `STRIPE_SECRET_KEY` in Netlify with the matching Stripe test secret key before testing payments. Add `STRIPE_PUBLISHABLE_KEY` later if you need to override the bundled client key, such as when switching to live Stripe keys.
@@ -34,7 +36,7 @@ DOWNLOAD_URL_DOOR_KNOCKING_SCRIPT
 DOWNLOAD_URL_ROOFING_LEADS
 ```
 
-If using `CLOUDFLARE_DOWNLOAD_BASE_URL`, upload files with these names:
+If using `CLOUDFLARE_DOWNLOAD_BASE_URL`, upload files with these names or set the matching `R2_FILE_KEY` values:
 
 ```text
 door-knocking-script.pdf
@@ -49,11 +51,11 @@ The livestream backend returns a download link only after Stripe confirms a paid
 
 1. Sign in to Cloudflare and open **R2 Object Storage**.
 2. Create a bucket for the paid files, for example `roofing-downloads`.
-3. Upload the two product files to that bucket with these exact object names:
+3. Upload the two product files to that bucket with these object names:
 
 ```text
-door-knocking-script.pdf
-how-to-get-roofing-leads.pdf
+Door Knocking Script.zip
+How to get roofing leads.zip
 ```
 
 4. Make the files reachable through a public download domain.
@@ -64,8 +66,8 @@ how-to-get-roofing-leads.pdf
 Example URLs:
 
 ```text
-https://downloads.yourdomain.com/door-knocking-script.pdf
-https://downloads.yourdomain.com/how-to-get-roofing-leads.pdf
+https://downloads.yourdomain.com/Door%20Knocking%20Script.zip
+https://downloads.yourdomain.com/How%20to%20get%20roofing%20leads.zip
 ```
 
 The matching base URL is:
@@ -78,12 +80,14 @@ https://downloads.yourdomain.com
 
 ```text
 CLOUDFLARE_DOWNLOAD_BASE_URL=https://downloads.yourdomain.com
+R2_FILE_KEY=Door Knocking Script.zip
+R2_FILE_KEY2=How to get roofing leads.zip
 ```
 
 7. Redeploy the Netlify site after saving the environment variable.
 8. Test a Stripe payment in the livestream:
-   - Buy **Door Knocking Script** and confirm its download button opens `door-knocking-script.pdf`.
-   - Buy **How To Get Roofing Leads** and confirm its download button opens `how-to-get-roofing-leads.pdf`.
+   - Buy **Door Knocking Script** and confirm its download button opens `Door Knocking Script.zip`.
+   - Buy **How To Get Roofing Leads** and confirm its download button opens `How to get roofing leads.zip`.
 
 ### Per-Product URL Setup
 
@@ -103,7 +107,7 @@ DOWNLOAD_URL_ROOFING_LEADS=https://your-download-url/how-to-get-roofing-leads.pd
 
 ### Important
 
-- Do not upload renamed files if you use `CLOUDFLARE_DOWNLOAD_BASE_URL`. The backend expects the exact file names listed above.
+- If the object names differ, update `R2_FILE_KEY` and `R2_FILE_KEY2` to match the files in the bucket.
 - Do not commit Cloudflare URLs, Stripe keys, or `.env` files when those values should stay environment-specific.
 - Direct public Cloudflare file URLs can be shared after a buyer receives them. If downloads need access control, replace public URLs with a signed or authenticated download flow before launch.
 

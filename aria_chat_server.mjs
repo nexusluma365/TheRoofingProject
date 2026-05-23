@@ -12,14 +12,16 @@ const stripeSecretKey = process.env.STRIPE_SECRET_KEY || '';
 const stripePublishableKey = process.env.STRIPE_PUBLISHABLE_KEY || defaultStripePublishableKey;
 const cloudflareDownloadBaseUrl = (process.env.CLOUDFLARE_DOWNLOAD_BASE_URL || '').replace(/\/+$/, '');
 
-const downloadUrl = (productId, fileName) => {
+const downloadUrl = (productId, product) => {
   const envName = `DOWNLOAD_URL_${productId.toUpperCase()}`;
   const explicitUrl = process.env[envName];
+  const fileName = process.env[product.downloadEnvKey] || product.downloadFile;
+  const encodedFileName = fileName.split('/').map(encodeURIComponent).join('/');
 
   if (explicitUrl) return explicitUrl;
   if (!cloudflareDownloadBaseUrl) return '';
 
-  return `${cloudflareDownloadBaseUrl}/${fileName}`;
+  return `${cloudflareDownloadBaseUrl}/${encodedFileName}`;
 };
 
 const stripeProducts = {
@@ -27,13 +29,15 @@ const stripeProducts = {
     name: 'Door Knocking Script',
     amount: 1700,
     currency: 'usd',
-    downloadFile: 'door-knocking-script.pdf'
+    downloadFile: 'door-knocking-script.pdf',
+    downloadEnvKey: 'R2_FILE_KEY'
   },
   roofing_leads: {
     name: 'How To Get Roofing Leads',
     amount: 2700,
     currency: 'usd',
-    downloadFile: 'how-to-get-roofing-leads.pdf'
+    downloadFile: 'how-to-get-roofing-leads.pdf',
+    downloadEnvKey: 'R2_FILE_KEY2'
   }
 };
 
@@ -130,7 +134,7 @@ const productPayload = (productId, product, includeDownload = false) => ({
   name: product.name,
   amount: product.amount,
   currency: product.currency,
-  downloadUrl: includeDownload ? downloadUrl(productId, product.downloadFile) : ''
+  downloadUrl: includeDownload ? downloadUrl(productId, product) : ''
 });
 
 const publicProducts = () => Object.fromEntries(
@@ -402,6 +406,11 @@ createServer(async (req, res) => {
   }
 
   if (req.method === 'POST' && req.url === '/api/stripe/confirm-purchase') {
+    await handleConfirmPurchase(req, res);
+    return;
+  }
+
+  if (req.method === 'POST' && req.url === '/api/get-download-link') {
     await handleConfirmPurchase(req, res);
     return;
   }

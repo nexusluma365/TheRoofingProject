@@ -14,13 +14,15 @@ const stripeProducts = {
     name: 'Door Knocking Script',
     amount: 1700,
     currency: 'usd',
-    downloadFile: 'door-knocking-script.pdf'
+    downloadFile: 'door-knocking-script.pdf',
+    downloadEnvKey: 'R2_FILE_KEY'
   },
   roofing_leads: {
     name: 'How To Get Roofing Leads',
     amount: 2700,
     currency: 'usd',
-    downloadFile: 'how-to-get-roofing-leads.pdf'
+    downloadFile: 'how-to-get-roofing-leads.pdf',
+    downloadEnvKey: 'R2_FILE_KEY2'
   }
 };
 
@@ -68,13 +70,15 @@ const readJson = (event) => {
   return JSON.parse(event.isBase64Encoded ? Buffer.from(event.body, 'base64').toString('utf8') : event.body);
 };
 
-const downloadUrl = (productId, fileName) => {
+const downloadUrl = (productId, product) => {
   const explicitUrl = process.env[`DOWNLOAD_URL_${productId.toUpperCase()}`];
+  const fileName = process.env[product.downloadEnvKey] || product.downloadFile;
+  const encodedFileName = fileName.split('/').map(encodeURIComponent).join('/');
 
   if (explicitUrl) return explicitUrl;
   if (!cloudflareDownloadBaseUrl) return '';
 
-  return `${cloudflareDownloadBaseUrl}/${fileName}`;
+  return `${cloudflareDownloadBaseUrl}/${encodedFileName}`;
 };
 
 const getProduct = (productId) => {
@@ -101,7 +105,7 @@ const productPayload = (productId, product, includeDownload = false) => ({
   name: product.name,
   amount: product.amount,
   currency: product.currency,
-  downloadUrl: includeDownload ? downloadUrl(productId, product.downloadFile) : ''
+  downloadUrl: includeDownload ? downloadUrl(productId, product) : ''
 });
 
 const stripeRequest = async (path, params = {}, method = 'POST') => {
@@ -302,6 +306,7 @@ export const handler = async (event) => {
   if (event.httpMethod === 'POST' && path === '/stripe/create-payment-intent') return handleCreatePaymentIntent(event);
   if (event.httpMethod === 'POST' && path === '/stripe/charge-saved') return handleChargeSavedPaymentMethod(event);
   if (event.httpMethod === 'POST' && path === '/stripe/confirm-purchase') return handleConfirmPurchase(event);
+  if (event.httpMethod === 'POST' && path === '/get-download-link') return handleConfirmPurchase(event);
 
   return respond(404, { error: 'Not found' });
 };
