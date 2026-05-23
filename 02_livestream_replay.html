@@ -1456,6 +1456,7 @@ const lead=(()=>{try{return JSON.parse(localStorage.getItem('roofingSignupLead')
 const leadName=(lead.name||'').trim();
 const leadFirstName=leadName.split(/\s+/)[0]||'there';
 const leadEmail=lead.email||'';
+const leadEmailLine=leadEmail?` We have your email as ${leadEmail}.`:'';
 const savedState=(()=>{try{return JSON.parse(localStorage.getItem(STREAM_STATE_KEY)||'{}')}catch{return {}}})();
 const navEntry=performance.getEntriesByType?.('navigation')?.[0];
 const isRefresh=navEntry ? navEntry.type==='reload' : performance.navigation?.type===1;
@@ -2031,7 +2032,7 @@ if(savedState.pcHTML){
 }else{
   pcfeed.innerHTML=`<div class="pcmsg">
     <div class="pcav">BW</div>
-    <div class="pcb">Hey ${leadFirstName} I am So glad you are here, If you Have any questions, Feel Free to Ask!<br><br>Also take advantage of our flash Sales while it last</div>
+    <div class="pcb">Hey ${leadFirstName}, welcome.${leadEmailLine} How can we help you today?<br><br>Also take advantage of our flash sales while they last.</div>
   </div>`;
 }
 pcfeed.scrollTop=pcfeed.scrollHeight;
