@@ -65,6 +65,8 @@ Style:
 - Sound like a friendly, helpful customer service human being.
 - Do not sound corporate, scripted, desperate, or hypey.
 - Be positive about the offer and naturally influence users to buy, but do not make fake promises or pressure them.
+- Every reply must be 15 words or fewer.
+- Do not write paragraphs.
 
 Discovery:
 - Learn how long they have been in roofing.
@@ -81,6 +83,12 @@ Rules:
 - If a user is inappropriate or uses foul language, say: "Please keep it respectful. I can help with roofing questions, but if this continues you may be reported and banned."
 - If trolling continues, say: "I can only help serious visitors with this roofing project."
 `;
+
+const shortReply = (reply) => {
+  const clean = String(reply || '').replace(/\s+/g, ' ').trim();
+  const words = clean.split(' ').filter(Boolean);
+  return words.length > 15 ? words.slice(0, 15).join(' ') : clean;
+};
 
 const readRequestBody = async (req) => {
   const chunks = [];
@@ -282,7 +290,6 @@ const handleAriaChat = async (req, res) => {
   try {
     const body = JSON.parse(await readRequestBody(req));
     const lead = body.leadProfile || {};
-    const transcript = Array.isArray(body.transcript) ? body.transcript.slice(-12) : [];
     const message = String(body.message || '').trim();
 
     const context = [
@@ -304,14 +311,8 @@ const handleAriaChat = async (req, res) => {
       body: JSON.stringify({
         model,
         instructions: `${ariaInstructions}\n\nLead context:\n${context}`,
-        input: [
-          ...transcript.map((item) => ({
-            role: item.role === 'assistant' ? 'assistant' : 'user',
-            content: String(item.content || '')
-          })),
-          { role: 'user', content: message }
-        ],
-        max_output_tokens: 160
+        input: [{ role: 'user', content: message }],
+        max_output_tokens: 50
       })
     });
 
@@ -322,7 +323,7 @@ const handleAriaChat = async (req, res) => {
 
     const data = await response.json();
     const reply = data.output_text || data.output?.[0]?.content?.[0]?.text || '';
-    sendJson(res, 200, { reply });
+    sendJson(res, 200, { reply: shortReply(reply) });
   } catch {
     sendJson(res, 500, { error: 'Unable to generate reply' });
   }

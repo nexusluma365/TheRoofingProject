@@ -1856,8 +1856,7 @@ function writeState(){
   lastSaveAt=Date.now();
   try{localStorage.setItem(STREAM_STATE_KEY,JSON.stringify({
     V,S,CL,pool,V_RAMPING,V_TARGET,heartIndex,offerIndex,liveVideoStartMs,videoMuted,
-    feedHTML:document.getElementById('feed')?.innerHTML||'',
-    pcHTML:document.getElementById('pcfeed')?.innerHTML||''
+    feedHTML:document.getElementById('feed')?.innerHTML||''
   }))}catch{}
 }
 function saveState(force=false){
@@ -2026,24 +2025,19 @@ function ky(e){if(e.key==='Enter')snd()}
 
 // Private chat
 const pcfeed=document.getElementById('pcfeed');
-if(savedState.pcHTML){
-  pcfeed.innerHTML=savedState.pcHTML;
-  pcfeed.querySelectorAll('.pcmsg.offer').forEach((offer)=>offer.remove());
-}else{
-  pcfeed.innerHTML=`<div class="pcmsg">
-    <div class="pcav">BW</div>
-    <div class="pcb">Hey ${leadFirstName}, welcome.${leadEmailLine} How can we help you today?<br><br>Also take advantage of our flash sales while they last.</div>
-  </div>`;
-}
+pcfeed.innerHTML=`<div class="pcmsg">
+  <div class="pcav">BW</div>
+  <div class="pcb">Hey ${esc(leadFirstName)}, welcome.${esc(leadEmailLine)} How can we help you today?<br><br>Also take advantage of our flash sales while they last.</div>
+</div>`;
 pcfeed.scrollTop=pcfeed.scrollHeight;
 function pcadd(text,me=false){
   const row=document.createElement('div');
   row.className='pcmsg'+(me?' me':'');
-  row.innerHTML=`${me?'':'<div class="pcav">BW</div>'}<div class="pcb">${text}</div>`;
+  row.innerHTML=`${me?'':'<div class="pcav">BW</div>'}<div class="pcb">${esc(text)}</div>`;
   pcfeed.appendChild(row);
   while(pcfeed.children.length>18)pcfeed.removeChild(pcfeed.firstChild);
   pcfeed.scrollTop=pcfeed.scrollHeight;
-  saveState();
+  return row;
 }
 const ROTATING_OFFERS=[
   {
@@ -2126,17 +2120,37 @@ function pcoffer(offer){
   offerIndex++;
   saveState();
 }
-function pcsnd(){
+function leadProfile(){
+  return {
+    name:leadName,
+    firstName:leadFirstName,
+    email:leadEmail,
+    phone:lead.phone||'',
+    roofingStatus:lead.roofingStatus||'',
+    goal:lead.goal||'',
+    obstacle:lead.obstacle||''
+  };
+}
+async function pcsnd(){
   const inp=document.getElementById('pci'),t=inp.value.trim();
   if(!t)return;
   pcadd(t,true);
   inp.value='';
-  setTimeout(()=>pcadd(rand([
-    'The Door Knocking Script gives you words to start with so you are not trying to figure it out from random videos.',
-    'The best place to start is the door pitch. Once you know what to say, the whole game feels less scary.',
-    'The roofing leads guide helps you see where demand is and how to start finding people to talk to.',
-    'These two guides are built for action: what to say at the door and where to find roofing leads.'
-  ])),randInt(900,1700));
+  const thinking=pcadd('Typing...',false);
+  try{
+    const res=await fetch('/api/aria-chat',{
+      method:'POST',
+      headers:{'Content-Type':'application/json'},
+      body:JSON.stringify({message:t,leadProfile:leadProfile()})
+    });
+    const data=await res.json();
+    if(!res.ok)throw new Error(data.error||'Chat unavailable');
+    thinking.remove();
+    pcadd(data.reply||'I can help with roofing. What are you working on today?',false);
+  }catch(error){
+    thinking.remove();
+    pcadd('I can help with roofing. What are you trying to improve today?',false);
+  }
 }
 function pcky(e){if(e.key==='Enter')pcsnd()}
 
