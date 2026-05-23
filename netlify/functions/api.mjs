@@ -175,6 +175,20 @@ const downloadUrl = (productId, product) => {
   return `${cloudflareDownloadBaseUrl}/${encodedFileName}`;
 };
 
+const downloadConfig = (productId, product) => {
+  const directEnvKey = `DOWNLOAD_URL_${productId.toUpperCase()}`;
+  const hasDirectUrl = Boolean(process.env[directEnvKey]);
+  const hasBaseUrl = Boolean(cloudflareDownloadBaseUrl);
+
+  return {
+    envKey: product.downloadEnvKey,
+    directEnvKey,
+    hasDirectUrl,
+    hasBaseUrl,
+    isConfigured: hasDirectUrl || hasBaseUrl
+  };
+};
+
 const getProduct = (productId) => {
   const product = stripeProducts[String(productId || '')];
 
@@ -199,7 +213,8 @@ const productPayload = (productId, product, includeDownload = false) => ({
   name: product.name,
   amount: product.amount,
   currency: product.currency,
-  downloadUrl: includeDownload ? downloadUrl(productId, product) : ''
+  downloadUrl: includeDownload ? downloadUrl(productId, product) : '',
+  downloadConfig: includeDownload ? downloadConfig(productId, product) : undefined
 });
 
 const stripeRequest = async (path, params = {}, method = 'POST') => {
