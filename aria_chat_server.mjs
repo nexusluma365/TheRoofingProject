@@ -11,6 +11,7 @@ const defaultStripePublishableKey = 'pk_test_51REXciCySCiHdPyyts0MmZgs87FbnLYUjF
 const stripeSecretKey = process.env.STRIPE_SECRET_KEY || '';
 const stripePublishableKey = process.env.STRIPE_PUBLISHABLE_KEY || defaultStripePublishableKey;
 const cloudflareDownloadBaseUrl = (process.env.CLOUDFLARE_DOWNLOAD_BASE_URL || '').replace(/\/+$/, '');
+const googleSheetsWebhookUrl = process.env.GOOGLE_SHEETS_WEBHOOK_URL || '';
 
 const downloadUrl = (productId, product) => {
   const envName = `DOWNLOAD_URL_${productId.toUpperCase()}`;
@@ -103,6 +104,89 @@ const readRequestBody = async (req) => {
 const sendJson = (res, status, payload) => {
   res.writeHead(status, { 'Content-Type': 'application/json; charset=utf-8' });
   res.end(JSON.stringify(payload));
+};
+
+const splitName = (lead = {}) => {
+  const fullName = String(lead.name || '').trim();
+  const parts = fullName.split(/\s+/).filter(Boolean);
+  const firstName = String(lead.firstName || parts[0] || '').trim();
+  const lastName = String(lead.lastName || parts.slice(1).join(' ') || '').trim();
+
+  return {
+    firstName,
+    lastName,
+    fullName: fullName || [firstName, lastName].filter(Boolean).join(' ')
+  };
+};
+
+const sheetPayload = ({ eventType, lead = {}, purchase = {}, source = '' }) => {
+  const names = splitName(lead);
+  const timestamp = new Date().toISOString();
+
+  return {
+    timestamp,
+    eventType: String(eventType || '').trim(),
+    firstName: names.firstName,
+    lastName: names.lastName,
+    fullName: names.fullName,
+    email: String(lead.email || '').trim(),
+    phone: String(lead.phone || '').trim(),
+    productId: String(purchase.productId || '').trim(),
+    productName: String(purchase.productName || '').trim(),
+    amount: purchase.amount ?? '',
+    currency: String(purchase.currency || '').trim(),
+    paymentIntentId: String(purchase.paymentIntentId || '').trim(),
+    customerId: String(purchase.customerId || '').trim(),
+    status: String(purchase.status || '').trim(),
+    source: String(source || '').trim(),
+    submittedAt: String(lead.submittedAt || '').trim()
+  };
+};
+
+const sendToGoogleSheets = async (payload) => {
+  if (!googleSheetsWebhookUrl) return { skipped: true };
+
+  const response = await fetch(googleSheetsWebhookUrl, {
+    method: 'POST',
+    headers: { 'Content-Type': 'application/json' },
+    body: JSON.stringify(payload)
+  });
+
+  if (!response.ok) {
+    const error = new Error('Google Sheets capture failed');
+    error.status = response.status;
+    throw error;
+  }
+
+  return { ok: true };
+};
+
+const captureSheetEvent = async (payload) => {
+  try {
+    return await sendToGoogleSheets(sheetPayload(payload));
+  } catch (error) {
+    console.warn('Sheets capture failed:', error);
+    return { error: true };
+  }
+};
+
+const handleSheetsCapture = async (req, res) => {
+  const body = JSON.parse(await readRequestBody(req));
+  const eventType = String(body.eventType || 'lead').trim();
+
+  if (!['lead', 'purchase'].includes(eventType)) {
+    sendJson(res, 400, { error: 'Unknown capture event type' });
+    return;
+  }
+
+  const result = await captureSheetEvent({
+    eventType,
+    lead: body.lead || {},
+    purchase: body.purchase || {},
+    source: body.source || 'site'
+  });
+
+  sendJson(res, 200, result);
 };
 
 const stripeRequest = async (path, params = {}, method = 'POST') => {
@@ -215,6 +299,8 @@ const handleChargeSavedPaymentMethod = async (req, res) => {
   try {
     const body = JSON.parse(await readRequestBody(req));
     const product = getProduct(body.productId);
+    const productId = String(body.productId || '');
+    const lead = body.lead || {};
     const customerId = String(body.customerId || '').trim();
     const paymentMethodId = String(body.paymentMethodId || '').trim();
 
@@ -232,14 +318,31 @@ const handleChargeSavedPaymentMethod = async (req, res) => {
       off_session: 'true',
       error_on_requires_action: 'true',
       description: product.name,
-      'metadata[product_id]': String(body.productId || ''),
+      'metadata[product_id]': productId,
       'metadata[product_name]': product.name
     });
+
+    if (paymentIntent.status === 'succeeded') {
+      await captureSheetEvent({
+        eventType: 'purchase',
+        lead,
+        source: 'saved_card_checkout',
+        purchase: {
+          productId,
+          productName: product.name,
+          amount: product.amount,
+          currency: product.currency,
+          paymentIntentId: paymentIntent.id,
+          customerId,
+          status: paymentIntent.status
+        }
+      });
+    }
 
     sendJson(res, 200, {
       status: paymentIntent.status,
       paymentIntentId: paymentIntent.id,
-      product: productPayload(String(body.productId || ''), product, paymentIntent.status === 'succeeded')
+      product: productPayload(productId, product, paymentIntent.status === 'succeeded')
     });
   } catch (error) {
     sendJson(res, error.status || 500, {
@@ -254,6 +357,7 @@ const handleConfirmPurchase = async (req, res) => {
     const body = JSON.parse(await readRequestBody(req));
     const productId = String(body.productId || '');
     const product = getProduct(productId);
+    const lead = body.lead || {};
     const paymentIntentId = String(body.paymentIntentId || '').trim();
 
     if (!paymentIntentId) {
@@ -268,6 +372,21 @@ const handleConfirmPurchase = async (req, res) => {
       sendJson(res, 402, { error: 'Payment has not been confirmed yet' });
       return;
     }
+
+    await captureSheetEvent({
+      eventType: 'purchase',
+      lead,
+      source: 'stripe_confirm_purchase',
+      purchase: {
+        productId,
+        productName: product.name,
+        amount: product.amount,
+        currency: product.currency,
+        paymentIntentId: paymentIntent.id,
+        customerId: paymentIntent.customer || '',
+        status: paymentIntent.status
+      }
+    });
 
     sendJson(res, 200, {
       status: paymentIntent.status,
@@ -391,6 +510,11 @@ const serveStatic = async (req, res) => {
 createServer(async (req, res) => {
   if (req.method === 'POST' && req.url === '/api/aria-chat') {
     await handleAriaChat(req, res);
+    return;
+  }
+
+  if (req.method === 'POST' && req.url === '/api/sheets/capture') {
+    await handleSheetsCapture(req, res);
     return;
   }
 

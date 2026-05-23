@@ -21,6 +21,7 @@ Environment variables:
 ```text
 OPENAI_API_KEY
 OPENAI_MODEL
+GOOGLE_SHEETS_WEBHOOK_URL
 STRIPE_SECRET_KEY
 CLOUDFLARE_DOWNLOAD_BASE_URL
 R2_FILE_KEY
@@ -28,6 +29,78 @@ R2_FILE_KEY2
 ```
 
 The livestream currently includes the Stripe test publishable key in its server-side config response. Set `STRIPE_SECRET_KEY` in Netlify with the matching Stripe test secret key before testing payments. Add `STRIPE_PUBLISHABLE_KEY` later if you need to override the bundled client key, such as when switching to live Stripe keys.
+
+## Google Sheets Lead Capture
+
+The landing page and successful purchases can append rows to Google Sheets through a Google Apps Script web app.
+
+Recommended columns for row 1:
+
+```text
+Timestamp | Event Type | First Name | Last Name | Full Name | Email | Phone | Product ID | Product Name | Amount | Currency | Payment Intent ID | Customer ID | Status | Source | Submitted At
+```
+
+Create an Apps Script attached to the Sheet and deploy it as a web app. Use this script:
+
+```javascript
+const SHEET_NAME = 'Roofing';
+const HEADERS = [
+  'Timestamp',
+  'Event Type',
+  'First Name',
+  'Last Name',
+  'Full Name',
+  'Email',
+  'Phone',
+  'Product ID',
+  'Product Name',
+  'Amount',
+  'Currency',
+  'Payment Intent ID',
+  'Customer ID',
+  'Status',
+  'Source',
+  'Submitted At'
+];
+
+function doPost(e) {
+  const sheet = SpreadsheetApp.getActiveSpreadsheet().getSheetByName(SHEET_NAME);
+  const data = JSON.parse(e.postData.contents || '{}');
+
+  if (sheet.getLastRow() === 0) sheet.appendRow(HEADERS);
+
+  sheet.appendRow([
+    data.timestamp || '',
+    data.eventType || '',
+    data.firstName || '',
+    data.lastName || '',
+    data.fullName || '',
+    data.email || '',
+    data.phone || '',
+    data.productId || '',
+    data.productName || '',
+    data.amount || '',
+    data.currency || '',
+    data.paymentIntentId || '',
+    data.customerId || '',
+    data.status || '',
+    data.source || '',
+    data.submittedAt || ''
+  ]);
+
+  return ContentService
+    .createTextOutput(JSON.stringify({ ok: true }))
+    .setMimeType(ContentService.MimeType.JSON);
+}
+```
+
+Deploy the script with access set to **Anyone**, then add the web app URL in Netlify:
+
+```text
+GOOGLE_SHEETS_WEBHOOK_URL=https://script.google.com/macros/s/your-deployment-id/exec
+```
+
+Redeploy Netlify after saving the variable.
 
 You can also set per-product Cloudflare URLs:
 

@@ -1663,6 +1663,7 @@ async function fetchDownloadUrl(productId,paymentIntentId){
   const payload={
     productId,
     paymentIntentId,
+    lead,
     downloadEnvKey:product.downloadEnvKey,
     fileKeyEnv:product.downloadEnvKey
   };
@@ -1849,7 +1850,7 @@ async function purchaseProduct(productId=DEFAULT_PRODUCT_ID){
       const res=await fetch('/api/stripe/charge-saved',{
         method:'POST',
         headers:{'Content-Type':'application/json'},
-        body:JSON.stringify({productId,customerId:saved.customerId,paymentMethodId:saved.paymentMethodId,downloadEnvKey:product.downloadEnvKey,fileKeyEnv:product.downloadEnvKey})
+        body:JSON.stringify({productId,customerId:saved.customerId,paymentMethodId:saved.paymentMethodId,lead,downloadEnvKey:product.downloadEnvKey,fileKeyEnv:product.downloadEnvKey})
       });
       const data=await res.json();
       if(!res.ok)throw new Error(data.error||'Saved card charge failed.');

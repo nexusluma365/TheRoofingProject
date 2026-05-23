@@ -3,6 +3,7 @@ const defaultStripePublishableKey = 'pk_test_51REXciCySCiHdPyyts0MmZgs87FbnLYUjF
 const stripeSecretKey = process.env.STRIPE_SECRET_KEY || '';
 const stripePublishableKey = process.env.STRIPE_PUBLISHABLE_KEY || defaultStripePublishableKey;
 const cloudflareDownloadBaseUrl = (process.env.CLOUDFLARE_DOWNLOAD_BASE_URL || '').replace(/\/+$/, '');
+const googleSheetsWebhookUrl = process.env.GOOGLE_SHEETS_WEBHOOK_URL || '';
 
 const jsonHeaders = {
   'Content-Type': 'application/json; charset=utf-8',
@@ -79,6 +80,88 @@ const routePath = (event) => {
 const readJson = (event) => {
   if (!event.body) return {};
   return JSON.parse(event.isBase64Encoded ? Buffer.from(event.body, 'base64').toString('utf8') : event.body);
+};
+
+const splitName = (lead = {}) => {
+  const fullName = String(lead.name || '').trim();
+  const parts = fullName.split(/\s+/).filter(Boolean);
+  const firstName = String(lead.firstName || parts[0] || '').trim();
+  const lastName = String(lead.lastName || parts.slice(1).join(' ') || '').trim();
+
+  return {
+    firstName,
+    lastName,
+    fullName: fullName || [firstName, lastName].filter(Boolean).join(' ')
+  };
+};
+
+const sheetPayload = ({ eventType, lead = {}, purchase = {}, source = '' }) => {
+  const names = splitName(lead);
+  const timestamp = new Date().toISOString();
+
+  return {
+    timestamp,
+    eventType: String(eventType || '').trim(),
+    firstName: names.firstName,
+    lastName: names.lastName,
+    fullName: names.fullName,
+    email: String(lead.email || '').trim(),
+    phone: String(lead.phone || '').trim(),
+    productId: String(purchase.productId || '').trim(),
+    productName: String(purchase.productName || '').trim(),
+    amount: purchase.amount ?? '',
+    currency: String(purchase.currency || '').trim(),
+    paymentIntentId: String(purchase.paymentIntentId || '').trim(),
+    customerId: String(purchase.customerId || '').trim(),
+    status: String(purchase.status || '').trim(),
+    source: String(source || '').trim(),
+    submittedAt: String(lead.submittedAt || '').trim()
+  };
+};
+
+const sendToGoogleSheets = async (payload) => {
+  if (!googleSheetsWebhookUrl) return { skipped: true };
+
+  const response = await fetch(googleSheetsWebhookUrl, {
+    method: 'POST',
+    headers: { 'Content-Type': 'application/json' },
+    body: JSON.stringify(payload)
+  });
+
+  if (!response.ok) {
+    const error = new Error('Google Sheets capture failed');
+    error.status = response.status;
+    throw error;
+  }
+
+  return { ok: true };
+};
+
+const captureSheetEvent = async (payload) => {
+  try {
+    return await sendToGoogleSheets(sheetPayload(payload));
+  } catch (error) {
+    console.warn('Sheets capture failed:', error);
+    return { error: true };
+  }
+};
+
+const handleSheetsCapture = async (event) => {
+  const body = readJson(event);
+  const eventType = String(body.eventType || 'lead').trim();
+
+  if (!['lead', 'purchase'].includes(eventType)) {
+    return respond(400, { error: 'Unknown capture event type' });
+  }
+
+  const result = await captureSheetEvent({
+    eventType,
+    lead: body.lead || {},
+    purchase: body.purchase || {},
+    source: body.source || 'site'
+  });
+
+  return respond(200, result);
 };
 
 const downloadUrl = (productId, product) => {
@@ -243,6 +326,7 @@ const handleChargeSavedPaymentMethod = async (event) => {
     const body = readJson(event);
     const productId = String(body.productId || '');
     const product = getProduct(productId);
+    const lead = body.lead || {};
     const customerId = String(body.customerId || '').trim();
     const paymentMethodId = String(body.paymentMethodId || '').trim();
 
@@ -260,6 +344,23 @@ const handleChargeSavedPaymentMethod = async (event) => {
       'metadata[product_id]': productId,
       'metadata[product_name]': product.name
     });
+
+    if (paymentIntent.status === 'succeeded') {
+      await captureSheetEvent({
+        eventType: 'purchase',
+        lead,
+        source: 'saved_card_checkout',
+        purchase: {
+          productId,
+          productName: product.name,
+          amount: product.amount,
+          currency: product.currency,
+          paymentIntentId: paymentIntent.id,
+          customerId,
+          status: paymentIntent.status
+        }
+      });
+    }
 
     return respond(200, {
       status: paymentIntent.status,
@@ -279,6 +380,7 @@ const handleConfirmPurchase = async (event) => {
     const body = readJson(event);
     const productId = String(body.productId || '');
     const product = getProduct(productId);
+    const lead = body.lead || {};
     const paymentIntentId = String(body.paymentIntentId || '').trim();
 
     if (!paymentIntentId) return respond(400, { error: 'Payment confirmation is missing' });
@@ -289,6 +391,21 @@ const handleConfirmPurchase = async (event) => {
     if (paymentIntent.status !== 'succeeded' || paidProductId !== productId) {
       return respond(402, { error: 'Payment has not been confirmed yet' });
     }
+
+    await captureSheetEvent({
+      eventType: 'purchase',
+      lead,
+      source: 'stripe_confirm_purchase',
+      purchase: {
+        productId,
+        productName: product.name,
+        amount: product.amount,
+        currency: product.currency,
+        paymentIntentId: paymentIntent.id,
+        customerId: paymentIntent.customer || '',
+        status: paymentIntent.status
+      }
+    });
 
     return respond(200, {
       status: paymentIntent.status,
@@ -306,6 +423,7 @@ export const handler = async (event) => {
   const path = routePath(event);
 
   if (event.httpMethod === 'POST' && path === '/aria-chat') return handleAriaChat(event);
+  if (event.httpMethod === 'POST' && path === '/sheets/capture') return handleSheetsCapture(event);
   if (event.httpMethod === 'GET' && path === '/stripe/config') return handleStripeConfig();
   if (event.httpMethod === 'POST' && path === '/stripe/create-payment-intent') return handleCreatePaymentIntent(event);
   if (event.httpMethod === 'POST' && path === '/stripe/charge-saved') return handleChargeSavedPaymentMethod(event);
