@@ -239,6 +239,49 @@ const stripeRequest = async (path, params = {}, method = 'POST') => {
   return data;
 };
 
+const createStripeCustomer = (lead = {}) => stripeRequest('customers', {
+  name: String(lead.name || '').slice(0, 160),
+  email: String(lead.email || '').slice(0, 240),
+  phone: String(lead.phone || '').slice(0, 40),
+  'metadata[source]': 'livestream_replay'
+});
+
+const createCheckoutPaymentIntent = async (productId, product, lead = {}, customerId = '') => {
+  const customer = customerId || (await createStripeCustomer(lead)).id;
+
+  try {
+    const paymentIntent = await stripeRequest('payment_intents', {
+      amount: String(product.amount),
+      currency: product.currency,
+      customer,
+      description: product.name,
+      setup_future_usage: 'off_session',
+      'payment_method_types[]': 'card',
+      'metadata[product_id]': productId,
+      'metadata[product_name]': product.name
+    });
+
+    return { paymentIntent, customer };
+  } catch (error) {
+    const savedCustomerMissing = customerId && error.stripeCode === 'resource_missing' && /customer/i.test(error.message || '');
+    if (!savedCustomerMissing) throw error;
+
+    const freshCustomer = await createStripeCustomer(lead);
+    const paymentIntent = await stripeRequest('payment_intents', {
+      amount: String(product.amount),
+      currency: product.currency,
+      customer: freshCustomer.id,
+      description: product.name,
+      setup_future_usage: 'off_session',
+      'payment_method_types[]': 'card',
+      'metadata[product_id]': productId,
+      'metadata[product_name]': product.name
+    });
+
+    return { paymentIntent, customer: freshCustomer.id };
+  }
+};
+
 const productPayload = (productId, product, includeDownload = false) => ({
   name: product.name,
   amount: product.amount,
@@ -277,31 +320,16 @@ const handleStripeConfig = async (req, res) => {
 const handleCreatePaymentIntent = async (req, res) => {
   try {
     const body = JSON.parse(await readRequestBody(req));
-    const product = getProduct(body.productId);
+    const productId = String(body.productId || '');
+    const product = getProduct(productId);
     const lead = body.lead || {};
     const customerId = String(body.customerId || '').trim();
-    const customer = customerId || (await stripeRequest('customers', {
-      name: String(lead.name || '').slice(0, 160),
-      email: String(lead.email || '').slice(0, 240),
-      phone: String(lead.phone || '').slice(0, 40),
-      'metadata[source]': 'livestream_replay'
-    })).id;
-
-    const paymentIntent = await stripeRequest('payment_intents', {
-      amount: String(product.amount),
-      currency: product.currency,
-      customer,
-      description: product.name,
-      setup_future_usage: 'off_session',
-      'payment_method_types[]': 'card',
-      'metadata[product_id]': String(body.productId || ''),
-      'metadata[product_name]': product.name
-    });
+    const { paymentIntent, customer } = await createCheckoutPaymentIntent(productId, product, lead, customerId);
 
     sendJson(res, 200, {
       clientSecret: paymentIntent.client_secret,
       customerId: customer,
-      product: productPayload(String(body.productId || ''), product)
+      product: productPayload(productId, product)
     });
   } catch (error) {
     sendJson(res, error.status || 500, {
