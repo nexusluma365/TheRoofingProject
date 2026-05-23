@@ -1871,7 +1871,7 @@ async function purchaseProduct(productId=DEFAULT_PRODUCT_ID){
     }catch(error){
       if(error.message)localStorage.removeItem(PAYMENT_STATE_KEY);
       await openPayment(productId);
-      setPayMessage(`${error.message} Please confirm your card again.`);
+      setPayMessage('Please confirm your card again. Saved test payment details cannot be reused for live payments.');
       return;
     }
   }
